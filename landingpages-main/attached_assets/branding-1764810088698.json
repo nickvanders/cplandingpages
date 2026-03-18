@@ -1,0 +1,100 @@
+{
+  "colorScheme": "light",
+  "fonts": [
+    {
+      "family": "Arial",
+      "role": "body"
+    }
+  ],
+  "colors": {
+    "primary": "#4285F4",
+    "accent": "#1A73E8",
+    "background": "#FFFFFF",
+    "textPrimary": "#1A73E8",
+    "link": "#1A73E8"
+  },
+  "typography": {
+    "fontFamilies": {
+      "primary": "Arial",
+      "heading": "Arial"
+    },
+    "fontStacks": {
+      "heading": [
+        "sans",
+        "Arial",
+        "sans-serif"
+      ],
+      "body": [
+        "sans",
+        "Arial",
+        "sans-serif"
+      ],
+      "paragraph": [
+        "sans",
+        "Arial",
+        "sans-serif"
+      ]
+    },
+    "fontSizes": {
+      "h1": "24px",
+      "h2": "24px",
+      "body": "15px"
+    }
+  },
+  "spacing": {
+    "baseUnit": 4,
+    "borderRadius": "5px"
+  },
+  "components": {
+    "input": {
+      "borderColor": "#CCCCCC",
+      "borderRadius": "5px"
+    },
+    "buttonPrimary": {
+      "background": "#1A73E8",
+      "textColor": "#FFFFFF",
+      "borderRadius": "20px",
+      "shadow": "none"
+    },
+    "buttonSecondary": {
+      "background": "#FFFFFF",
+      "textColor": "#5F6368",
+      "borderColor": "#9AA0A6",
+      "borderRadius": "20px",
+      "shadow": "none"
+    }
+  },
+  "images": {
+    "logo": null,
+    "favicon": null,
+    "ogImage": null
+  },
+  "__framework_hints": [],
+  "__llm_button_reasoning": {
+    "primary": {
+      "index": 0,
+      "text": "Reload",
+      "reasoning": "Button #0 has a vibrant blue background (#1A73E8), which is a brand color, and action-oriented text ('Reload'). This makes it the primary CTA."
+    },
+    "secondary": {
+      "index": 1,
+      "text": "Details",
+      "reasoning": "Button #1 has a white background (#FFFFFF), which is distinctly different from the primary button's color. It serves as a less prominent action, making it the secondary button."
+    },
+    "confidence": 0.95
+  },
+  "personality": {
+    "tone": "professional",
+    "energy": "medium",
+    "targetAudience": "individuals seeking psychological services"
+  },
+  "designSystem": {
+    "framework": "unknown",
+    "componentLibrary": null
+  },
+  "confidence": {
+    "buttons": 0.95,
+    "colors": 0.9,
+    "overall": 0.925
+  }
+}
