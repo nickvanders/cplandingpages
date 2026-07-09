@@ -202,29 +202,29 @@ export default function ASDAssessment({ onBookClick }: ASDAssessmentProps) {
           </div>
         </div>
 
-        <div className="text-center">
-          <h3 className="font-heading text-xl font-semibold text-foreground mb-6">
+        <div className="text-center py-12">
+          <h3 className="font-heading text-2xl font-semibold text-foreground mb-8">
             Assessment Fee Breakdown
           </h3>
-          <div className="max-w-2xl mx-auto overflow-x-auto">
-            <table className="w-full text-sm">
+          <div className="max-w-3xl mx-auto overflow-x-auto">
+            <table className="w-full text-base">
               <thead>
                 <tr className="border-b border-foreground/20">
-                  <th className="text-left pb-3 pr-8 font-medium text-foreground/50 uppercase tracking-wider text-xs">Component</th>
-                  <th className="text-left pb-3 pr-8 font-medium text-foreground/50 uppercase tracking-wider text-xs">Cost</th>
-                  <th className="text-left pb-3 font-medium text-foreground/50 uppercase tracking-wider text-xs">Notes</th>
+                  <th className="text-left pb-4 pr-10 font-medium text-foreground/50 uppercase tracking-wider text-xs">Component</th>
+                  <th className="text-left pb-4 pr-10 font-medium text-foreground/50 uppercase tracking-wider text-xs">Cost</th>
+                  <th className="text-left pb-4 font-medium text-foreground/50 uppercase tracking-wider text-xs">Notes</th>
                 </tr>
               </thead>
               <tbody className="text-muted-foreground">
                 <tr className="border-b border-foreground/10">
-                  <td className="py-4 pr-8 text-foreground font-medium whitespace-nowrap">Assessment sessions</td>
-                  <td className="py-4 pr-8 whitespace-nowrap">$260.30 per session</td>
-                  <td className="py-4">Minimum 3 sessions ($780.90). Additional sessions or after-hours appointments may increase the total.</td>
+                  <td className="py-6 pr-10 text-foreground font-medium whitespace-nowrap">Assessment sessions</td>
+                  <td className="py-6 pr-10 whitespace-nowrap">$260.30 per session</td>
+                  <td className="py-6">Minimum 3 sessions ($780.90). Additional sessions or after-hours appointments may increase the total.</td>
                 </tr>
                 <tr>
-                  <td className="py-4 pr-8 text-foreground font-medium whitespace-nowrap">Written report + feedback</td>
-                  <td className="py-4 pr-8 whitespace-nowrap">$765</td>
-                  <td className="py-4">Includes full written report and a 30-minute feedback appointment.</td>
+                  <td className="py-6 pr-10 text-foreground font-medium whitespace-nowrap">Written report + feedback</td>
+                  <td className="py-6 pr-10 whitespace-nowrap">$765</td>
+                  <td className="py-6">Includes full written report and a 30-minute feedback appointment.</td>
                 </tr>
               </tbody>
             </table>
