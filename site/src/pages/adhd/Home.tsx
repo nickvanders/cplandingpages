@@ -9,16 +9,16 @@ import { PHONE, PHONE_HREF, BOOK_URL, EMAIL, ADDRESS } from "../../components/sh
 
 const BADGE_COLOR = "#27BBE9";
 
-const TRUST_BADGES = ["AHPRA-registered", "2025 guidelines compliant", "No referral needed", "Telehealth available"];
+const TRUST_BADGES = ["AHPRA-registered", "2026 guidelines compliant", "No referral needed", "Telehealth available"];
 
 const PROCESS_STEPS = [
-  { n: "01", title: "Accurate diagnosis", body: "A thorough clinical assessment aligned with the 2025 World Psychiatry consensus guidelines for adult ADHD." },
+  { n: "01", title: "Accurate diagnosis", body: "A thorough clinical assessment aligned with the 2026 World Psychiatry consensus guidelines for adult ADHD." },
   { n: "02", title: "Written report + recommendations", body: "A comprehensive diagnostic report suitable for GPs, employers, and NDIS providers, with personalised recommendations." },
   { n: "03", title: "Coaching and skills program", body: "Practical ADHD coaching and skills training to build systems, manage time, and improve daily functioning." },
 ];
 
 const WHY_CARDS = [
-  { title: "Gold-standard assessment", body: "Our assessments align with the 2025 World Psychiatry consensus guidelines — the most rigorous adult ADHD framework available." },
+  { title: "Gold-standard assessment", body: "Our assessments align with the 2026 World Psychiatry consensus guidelines, the most rigorous adult ADHD framework available." },
   { title: "No referral required", body: "You can book directly with us. No GP visit needed before starting your assessment." },
   { title: "AHPRA-registered psychologists", body: "All assessments are conducted by registered psychologists with neurodevelopmental experience." },
   { title: "Telehealth Australia-wide", body: "Access assessment and coaching from anywhere in Australia via secure video consultations." },
@@ -88,7 +88,7 @@ export default function ADHDHome() {
               ADHD Assessment and Coaching<br className="hidden sm:block" /> in Melbourne
             </h1>
             <p className="font-poppins text-cp-body text-lg mb-8 max-w-xl">
-              Gold-standard ADHD diagnosis aligned with the 2025 World Psychiatry consensus guidelines, followed by personalised coaching and skills training. In person in St Kilda and via telehealth across Australia.
+              Gold-standard ADHD diagnosis aligned with the 2026 World Psychiatry consensus guidelines, followed by personalised coaching and skills training. In person in St Kilda and via telehealth across Australia.
             </p>
             <div className="flex flex-wrap gap-3 mb-8">
               {TRUST_BADGES.map(b => (
@@ -106,17 +106,6 @@ export default function ADHDHome() {
               </a>
             </div>
           </div>
-        </div>
-      </section>
-
-      {/* Enquiry Form */}
-      <section className="bg-white py-16">
-        <div className="max-w-2xl mx-auto px-4 sm:px-6">
-          <EnquiryForm
-            page="adhd"
-            heading="Book your ADHD assessment"
-            subtext="No GP referral required. Appointments available within 1–2 weeks. Our admin team will confirm your booking within one business day."
-          />
         </div>
       </section>
 
@@ -230,6 +219,17 @@ export default function ADHDHome() {
           <div>
             {FAQS.map(f => <FAQ key={f.q} {...f} />)}
           </div>
+        </div>
+      </section>
+
+      {/* Enquiry Form */}
+      <section className="bg-white py-16">
+        <div className="max-w-2xl mx-auto px-4 sm:px-6">
+          <EnquiryForm
+            page="adhd"
+            heading="Book your ADHD assessment"
+            subtext="No GP referral required. Appointments available within 1 to 2 weeks. Our admin team will confirm your booking within one business day."
+          />
         </div>
       </section>
 

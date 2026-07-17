@@ -90,7 +90,7 @@ export default function EnquiryForm({ page, heading, subtext }: Props) {
         <p className="font-poppins text-cp-body mb-6">We'll be in touch within one business day to confirm your enquiry.</p>
         <a href={PHONE_HREF} className="inline-flex items-center gap-2 cp-gradient-bg text-white px-6 py-3 rounded-full font-poppins font-semibold text-sm hover:opacity-90 transition-opacity">
           <Phone className="w-4 h-4" />
-          Call us now — {PHONE}
+          Call us now: {PHONE}
         </a>
       </div>
     );

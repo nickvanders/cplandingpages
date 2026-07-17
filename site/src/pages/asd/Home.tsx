@@ -103,17 +103,6 @@ export default function ASDHome() {
         </div>
       </section>
 
-      {/* Enquiry Form */}
-      <section className="bg-white py-16">
-        <div className="max-w-2xl mx-auto px-4 sm:px-6">
-          <EnquiryForm
-            page="asd"
-            heading="Enquire about an ASD assessment"
-            subtext="No GP referral required. Our psychologists have experience assessing across a wide range of presentations and ages. We'll respond within one business day."
-          />
-        </div>
-      </section>
-
       {/* Pricing callout */}
       <section className="bg-surface-warm py-8">
         <div className="max-w-2xl mx-auto px-4 sm:px-6">
@@ -224,6 +213,17 @@ export default function ASDHome() {
           <div>
             {FAQS.map(f => <FAQ key={f.q} {...f} />)}
           </div>
+        </div>
+      </section>
+
+      {/* Enquiry Form */}
+      <section className="bg-white py-16">
+        <div className="max-w-2xl mx-auto px-4 sm:px-6">
+          <EnquiryForm
+            page="asd"
+            heading="Enquire about an ASD assessment"
+            subtext="No GP referral required. Our psychologists have experience assessing across a wide range of presentations and ages. We'll respond within one business day."
+          />
         </div>
       </section>
 
