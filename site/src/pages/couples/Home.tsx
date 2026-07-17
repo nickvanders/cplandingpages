@@ -1,4 +1,4 @@
-import Navbar from "../../components/shared/Navbar";
+import LandingNav from "../../components/LandingNav";
 import ParticleBackground from "../../components/shared/ParticleBackground";
 import EnquiryForm from "../../components/shared/EnquiryForm";
 import { FadeIn } from "../../components/shared/FadeIn";
@@ -56,7 +56,7 @@ function FAQ({ q, a }: { q: string; a: string }) {
 export default function CouplesHome() {
   return (
     <div className="min-h-screen bg-white font-poppins">
-      <Navbar />
+      <LandingNav />
 
       {/* Hero */}
       <section className="relative min-h-[580px] bg-navy flex items-center overflow-hidden">
