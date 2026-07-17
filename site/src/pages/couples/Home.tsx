@@ -26,7 +26,7 @@ const WHY_CARDS = [
 
 const LUCY = {
   name: "Lucy Adlard", title: "Psychologist", slug: "lucy-adlard",
-  photo: "https://contemporarypsychology.com.au/images/team/lucy.jpg",
+  photo: "/assets/lucy.jpg",
   tags: ["Couples Therapy", "Gottman Method Level 2"],
   bio: "Lucy has experience in couples therapy and has a particular interest in the Gottman Method. She is Gottman Method Level 2 trained and works with couples navigating communication difficulties, conflict, and relationship transitions.",
 };

@@ -27,25 +27,25 @@ const WHY_CARDS = [
 const TEAM = [
   {
     name: "Rivkah Bendet", title: "Psychologist", slug: "rivkah-bendet",
-    photo: "https://contemporarypsychology.com.au/images/team/rivkah.jpg",
+    photo: "/assets/rivkah.jpg",
     tags: ["ADHD & ASD Assessment", "Neuroaffirming"],
     bio: "Rivkah has experience in ADHD and ASD assessment for adults and adolescents, and has a particular interest in neuroaffirming practice.",
   },
   {
     name: "Avi Winner", title: "Psychologist", slug: "avi-winner",
-    photo: "https://contemporarypsychology.com.au/images/team/avi.jpg",
+    photo: "/assets/avi.jpg",
     tags: ["Assessments", "Neurodivergence"],
     bio: "Avi has experience in psychological assessments and has a particular interest in neurodivergence across the lifespan.",
   },
   {
     name: "David Bokan", title: "Psychologist", slug: "david-bokan",
-    photo: "https://contemporarypsychology.com.au/images/team/david.png",
+    photo: "/assets/david.png",
     tags: ["ADHD Assessments", "Neuroaffirming"],
     bio: "David has experience in ADHD assessments and has a particular interest in neuroaffirming approaches to diagnosis and support.",
   },
   {
     name: "Bridget Kosmas", title: "Provisional Psychologist", slug: "bridget-kosmas",
-    photo: "https://contemporarypsychology.com.au/images/team/bridget.png",
+    photo: "/assets/bridget.png",
     tags: ["Assessments", "Anxiety & Emotion Regulation"],
     bio: "Bridget has experience in psychological assessments and has a particular interest in anxiety and emotion regulation.",
   },
