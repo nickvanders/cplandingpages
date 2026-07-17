@@ -196,6 +196,16 @@
  * Even without handling focused or not, this is six possible combinations that
  * need to be distinguished from eachother visually.
  */
+.cp-gradient-bg {
+  background: linear-gradient(135deg, #F2506A, #B67AEC, #27BBE9);
+}
+.cp-gradient-text {
+  background: linear-gradient(to right, #F2506A, #B67AEC);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
 @layer utilities {
 
   /* Hide ugly search cancel button in Chrome until we can style it properly */

@@ -11,6 +11,17 @@ export default {
         sm: ".1875rem",
       },
       colors: {
+        'brand-pink': '#F2506A',
+        'brand-purple': '#B67AEC',
+        'brand-sky': '#27BBE9',
+        'brand-blue': '#5AB0ED',
+        'cp-body': '#3D3D5C',
+        'cp-muted': '#7777AA',
+        'cp-rule': '#E2DCEF',
+        'navy': '#b2defd',
+        'surface-warm': '#FAFAF8',
+        'surface-pink': '#FDF0F4',
+        'surface-purple': '#F6F0FD',
         background: "hsl(var(--background) / <alpha-value>)",
         foreground: "hsl(var(--foreground) / <alpha-value>)",
         border: "hsl(var(--border) / <alpha-value>)",
@@ -80,6 +91,8 @@ export default {
         heading: ["var(--font-heading)"],
         serif: ["var(--font-serif)"],
         mono: ["var(--font-mono)"],
+        lora: ['Lora', 'serif'],
+        poppins: ['Poppins', 'sans-serif'],
       },
       keyframes: {
         "accordion-down": {
