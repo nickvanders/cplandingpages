@@ -24,7 +24,7 @@ export default function LandingNav() {
           {/* Logo */}
           <a href={MAIN} className="flex items-center gap-3 flex-shrink-0">
             <img
-              src="/assets/Contemporary-Psychology-logo_1764828612373.png"
+              src="/favicon.png"
               alt="Contemporary Psychology"
               className="h-10 w-auto"
             />
