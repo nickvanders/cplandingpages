@@ -24,10 +24,12 @@ const WHY_CARDS = [
   { title: "Telehealth available", body: "Couples sessions are available via secure video call for clients across Australia." },
 ];
 
-const TEAM = [
-  { name: "Lucy Adlard", role: "Psychologist", specialties: "Gottman Level 2 trained · Couples · Relationships" },
-  { name: "Claudia Hounslow", role: "Psychologist", specialties: "Couples · Relationships · Individual therapy" },
-];
+const LUCY = {
+  name: "Lucy Adlard", title: "Psychologist", slug: "lucy-adlard",
+  photo: "https://contemporarypsychology.com.au/images/team/lucy.jpg",
+  tags: ["Couples Therapy", "Gottman Method Level 2"],
+  bio: "Lucy has experience in couples therapy and has a particular interest in the Gottman Method. She is Gottman Method Level 2 trained and works with couples navigating communication difficulties, conflict, and relationship transitions.",
+};
 
 const FAQS = [
   { q: "Do we both need to attend?", a: "Most sessions involve both partners. Occasionally individual sessions may be recommended as part of the process." },
@@ -155,24 +157,29 @@ export default function CouplesHome() {
 
       {/* Team */}
       <section className="bg-surface-warm py-16">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6">
           <FadeIn>
-            <h2 className="font-lora text-3xl font-bold text-[#071B27] mb-10 text-center">Meet the team</h2>
+            <h2 className="font-lora text-3xl font-bold text-[#071B27] mb-3 text-center">Meet your therapist</h2>
+            <p className="font-poppins text-cp-muted text-center mb-10">AHPRA-registered psychologist with couples therapy experience.</p>
           </FadeIn>
-          <div className="grid sm:grid-cols-2 gap-6 max-w-2xl mx-auto">
-            {TEAM.map((m, i) => (
-              <FadeIn key={m.name} delay={i * 80}>
-                <div className="bg-white rounded-2xl p-6 border border-cp-rule text-center" style={{ boxShadow: "0 2px 16px 0 rgba(182,122,236,0.08)" }}>
-                  <div className="w-16 h-16 rounded-full cp-gradient-bg mx-auto mb-4 flex items-center justify-center text-white font-lora font-bold text-xl">
-                    {m.name.split(" ").map(n => n[0]).join("")}
-                  </div>
-                  <h3 className="font-lora font-bold text-[#071B27] text-lg">{m.name}</h3>
-                  <p className="font-poppins text-xs text-cp-muted mt-1">{m.role}</p>
-                  <p className="font-poppins text-xs text-cp-muted mt-2 border-t border-cp-rule pt-2">{m.specialties}</p>
+          <FadeIn>
+            <div className="bg-white rounded-2xl border border-[#E5E7EB] overflow-hidden flex flex-col md:flex-row" style={{ boxShadow: "0 2px 16px 0 rgba(182,122,236,0.08)" }}>
+              <div className="md:w-64 flex-shrink-0 bg-[#F5EEFF] overflow-hidden">
+                <img src={LUCY.photo} alt={LUCY.name} className="w-full h-full object-cover object-top" onError={e => { (e.target as HTMLImageElement).style.display = "none"; }} />
+              </div>
+              <div className="p-8 flex flex-col justify-center">
+                <h3 className="font-lora font-bold text-[#071B27] text-2xl leading-tight">{LUCY.name}</h3>
+                <p className="font-poppins text-sm text-[#6B7280] mt-1 mb-4">{LUCY.title}</p>
+                <div className="flex flex-wrap gap-2 mb-4">
+                  {LUCY.tags.map(t => (
+                    <span key={t} className="px-3 py-1 rounded-full text-xs font-poppins font-medium" style={{ background: "#F5EEFF", color: "#9B51E0" }}>{t}</span>
+                  ))}
                 </div>
-              </FadeIn>
-            ))}
-          </div>
+                <p className="font-poppins text-sm text-[#374151] mb-4">{LUCY.bio}</p>
+                <a href={`https://contemporarypsychology.com.au/our-team/${LUCY.slug}`} className="font-poppins text-sm font-medium hover:underline" style={{ color: "#B67AEC" }}>View profile →</a>
+              </div>
+            </div>
+          </FadeIn>
         </div>
       </section>
 

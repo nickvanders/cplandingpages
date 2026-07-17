@@ -25,9 +25,30 @@ const WHY_CARDS = [
 ];
 
 const TEAM = [
-  { name: "Avi Winner", role: "Clinical Psychologist", specialties: "ADHD · ASD · Neurodevelopmental" },
-  { name: "Rivkah Bendet", role: "Psychologist", specialties: "ADHD · ASD · Adult presentations" },
-  { name: "David Bokan", role: "Psychologist", specialties: "ADHD · ASD · Cognitive assessment" },
+  {
+    name: "Rivkah Bendet", title: "Psychologist", slug: "rivkah-bendet",
+    photo: "https://contemporarypsychology.com.au/images/team/rivkah.jpg",
+    tags: ["ADHD & ASD Assessment", "Neuroaffirming"],
+    bio: "Rivkah has experience in ADHD and ASD assessment for adults and adolescents, and has a particular interest in neuroaffirming practice.",
+  },
+  {
+    name: "Avi Winner", title: "Psychologist", slug: "avi-winner",
+    photo: "https://contemporarypsychology.com.au/images/team/avi.jpg",
+    tags: ["Assessments", "Neurodivergence"],
+    bio: "Avi has experience in psychological assessments and has a particular interest in neurodivergence across the lifespan.",
+  },
+  {
+    name: "David Bokan", title: "Psychologist", slug: "david-bokan",
+    photo: "https://contemporarypsychology.com.au/images/team/david.png",
+    tags: ["ADHD Assessments", "Neuroaffirming"],
+    bio: "David has experience in ADHD assessments and has a particular interest in neuroaffirming approaches to diagnosis and support.",
+  },
+  {
+    name: "Bridget Kosmas", title: "Provisional Psychologist", slug: "bridget-kosmas",
+    photo: "https://contemporarypsychology.com.au/images/team/bridget.png",
+    tags: ["Assessments", "Anxiety & Emotion Regulation"],
+    bio: "Bridget has experience in psychological assessments and has a particular interest in anxiety and emotion regulation.",
+  },
 ];
 
 const FAQS = [
@@ -158,18 +179,27 @@ export default function ADHDHome() {
       <section className="bg-surface-warm py-16">
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
           <FadeIn>
-            <h2 className="font-lora text-3xl font-bold text-[#071B27] mb-10 text-center">Meet the team</h2>
+            <h2 className="font-lora text-3xl font-bold text-[#071B27] mb-3 text-center">Meet the team</h2>
+            <p className="font-poppins text-cp-muted text-center mb-10">AHPRA-registered psychologists with neurodevelopmental experience.</p>
           </FadeIn>
-          <div className="grid sm:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {TEAM.map((m, i) => (
               <FadeIn key={m.name} delay={i * 80}>
-                <div className="bg-white rounded-2xl p-6 border border-cp-rule text-center" style={{ boxShadow: "0 2px 16px 0 rgba(182,122,236,0.08)" }}>
-                  <div className="w-16 h-16 rounded-full cp-gradient-bg mx-auto mb-4 flex items-center justify-center text-white font-lora font-bold text-xl">
-                    {m.name.split(" ").map(n => n[0]).join("")}
+                <div className="bg-white rounded-2xl border border-[#E5E7EB] overflow-hidden" style={{ boxShadow: "0 2px 16px 0 rgba(182,122,236,0.08)" }}>
+                  <div className="aspect-[4/3] bg-[#F5EEFF] overflow-hidden">
+                    <img src={m.photo} alt={m.name} className="w-full h-full object-cover object-top" onError={e => { (e.target as HTMLImageElement).style.display = "none"; }} />
                   </div>
-                  <h3 className="font-lora font-bold text-[#071B27] text-lg">{m.name}</h3>
-                  <p className="font-poppins text-xs text-cp-muted mt-1">{m.role}</p>
-                  <p className="font-poppins text-xs text-cp-muted mt-2 border-t border-cp-rule pt-2">{m.specialties}</p>
+                  <div className="p-5">
+                    <h3 className="font-lora font-bold text-[#071B27] text-lg leading-tight">{m.name}</h3>
+                    <p className="font-poppins text-sm text-[#6B7280] mt-0.5 mb-3">{m.title}</p>
+                    <div className="flex flex-wrap gap-1.5 mb-3">
+                      {m.tags.map(t => (
+                        <span key={t} className="px-2 py-0.5 rounded-full text-xs font-poppins font-medium" style={{ background: "#F5EEFF", color: "#9B51E0" }}>{t}</span>
+                      ))}
+                    </div>
+                    <p className="font-poppins text-sm text-[#374151] mb-3">{m.bio}</p>
+                    <a href={`https://contemporarypsychology.com.au/our-team/${m.slug}`} className="font-poppins text-sm font-medium hover:underline" style={{ color: "#B67AEC" }}>View profile →</a>
+                  </div>
                 </div>
               </FadeIn>
             ))}
