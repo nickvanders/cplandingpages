@@ -199,7 +199,7 @@ export default function CouplesHome() {
       </section>
 
       {/* Enquiry Form */}
-      <section className="bg-white py-16">
+      <section className="py-16 border-t border-b border-[#C8E6F7]" style={{ background: "#EBF5FD" }}>
         <div className="max-w-3xl mx-auto px-4 sm:px-6">
           <h2 className="font-lora text-2xl font-bold text-[#071B27] mb-2">Book a couples session</h2>
           <p className="font-poppins text-cp-muted text-sm mb-8">Sessions are 50 minutes. No referral required. You can use a Mental Health Care Plan for individual Medicare rebates. Our team will respond within one business day.</p>
