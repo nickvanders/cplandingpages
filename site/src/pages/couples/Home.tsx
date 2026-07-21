@@ -116,10 +116,10 @@ export default function CouplesHome() {
           <FadeIn>
             <h2 className="font-lora text-3xl font-bold text-[#071B27] mb-6">What is couples counselling?</h2>
             <p className="font-poppins text-cp-body text-sm leading-relaxed mb-4">
-              Couples counselling is a form of therapy that supports partners in improving and strengthening their relationship. Through structured sessions with a trained psychologist, couples explore the patterns, emotions, and dynamics that shape their connection.
+              Couples counselling is a form of psychotherapy that supports partners in improving and strengthening their relationship. Through structured sessions with a trained psychologist, couples explore the patterns, emotions, and dynamics that shape their connection and lay the foundation for meaningful change.
             </p>
             <p className="font-poppins text-cp-body text-sm leading-relaxed">
-              Contemporary Psychology's process focuses on building healthy communication, resolving conflicts, deepening emotional intimacy, and fostering mutual understanding. Couples sessions are guided by the Gottman Method — a leading research-based approach to couples therapy. Our focus extends beyond resolving problems as they arise, instead prioritising educating and empowering couples to improve connection, communication, and conflict management through practical, evidence-based tools focused on long-term relationship health.
+              At Contemporary Psychology, our approach centres on building healthy communication, resolving conflicts, deepening emotional intimacy, and fostering mutual understanding. Our couples sessions are guided by the Gottman Method, a leading research-based approach with over 40 years of scientific foundation. Rather than simply addressing problems as they arise, we prioritise educating and empowering couples with practical, evidence-based tools focused on long-term relationship health.
             </p>
           </FadeIn>
         </div>
@@ -151,7 +151,7 @@ export default function CouplesHome() {
           <FadeIn>
             <h2 className="font-lora text-3xl font-bold text-[#071B27] mb-4">Who is couples counselling for?</h2>
             <p className="font-poppins text-cp-body text-sm leading-relaxed mb-6">
-              There are many different reasons why couples seek therapy. Couples at all stages of their relationship can benefit from counselling — there is no right or wrong time or circumstance. Some of the more common reasons include:
+              There are many different reasons why couples seek therapy. Couples at all stages of their relationship can benefit from counselling. There is no right or wrong time or circumstance. Some of the more common reasons include:
             </p>
           </FadeIn>
           <FadeIn delay={80}>
@@ -166,7 +166,7 @@ export default function CouplesHome() {
           </FadeIn>
           <FadeIn delay={160}>
             <p className="font-poppins text-sm text-cp-body leading-relaxed">
-              Contrary to popular belief, couples counselling isn't only for those experiencing challenges. Many couples who are functioning well also find it valuable — whether preparing for major life transitions such as marriage, parenthood, or relocation, or simply wanting to strengthen their relationship foundations and maintain long-term connection.
+              Contrary to popular belief, couples counselling is not exclusively for those experiencing difficulties. Many couples who are functioning well find it equally valuable, whether they are preparing for significant life transitions such as marriage, parenthood, or relocation, or simply wanting to strengthen their foundations and sustain long-term connection.
             </p>
           </FadeIn>
         </div>
