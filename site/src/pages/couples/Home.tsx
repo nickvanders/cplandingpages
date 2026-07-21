@@ -11,17 +11,25 @@ const BADGE_COLOR = "#F2506A";
 
 const TRUST_BADGES = ["Gottman-informed", "AHPRA-registered", "Medicare rebates available", "In-person + telehealth"];
 
-const PROCESS_STEPS = [
-  { n: "01", title: "Communication and conflict", body: "Difficulty communicating, recurring arguments, or feeling unheard are among the most common reasons couples seek support." },
-  { n: "02", title: "Betrayal and trust", body: "Infidelity, broken trust, or unmet expectations can be addressed within a structured, safe therapeutic environment." },
-  { n: "03", title: "Disconnection and life transitions", body: "Major life changes, growing apart, or feeling disconnected can be worked through with skilled guidance." },
-];
-
 const WHY_CARDS = [
   { title: "Gottman Method", body: "Our psychologists use Gottman-informed therapy, an evidence-based approach built on 40+ years of research into what makes relationships succeed." },
   { title: "No referral required", body: "You can book directly with us. No GP visit needed before starting couples counselling." },
   { title: "Medicare rebates with MHCP", body: "Each partner may be eligible for Medicare rebates with a Mental Health Care Plan when individual sessions are clinically appropriate." },
   { title: "Telehealth available", body: "Couples sessions are available via secure video call for clients across Australia." },
+];
+
+const WHO_FOR = [
+  "Addressing communication difficulties, such as challenges in expressing needs, listening to each other, or resolving conflicts.",
+  "Seeking healthier ways to manage disagreements or reduce recurring arguments that lead to ongoing tension.",
+  "Feeling emotionally disconnected or distant, resulting in a sense of isolation or misunderstanding.",
+  "Coping with the aftermath of an affair or betrayal and working towards rebuilding trust.",
+  "Navigating issues with physical or emotional intimacy that impact overall relationship satisfaction.",
+];
+
+const HOW_IT_WORKS = [
+  { n: "01", title: "90-minute intake session", body: "Together, you and your partner explore your relationship history, current patterns, and shared concerns with your psychologist." },
+  { n: "02", title: "Individual 30-minute session", body: "Each partner meets separately, providing space to reflect on personal history and individual goals for the relationship." },
+  { n: "03", title: "Ongoing couples sessions", body: "Sessions are then scheduled according to a collaboratively developed plan agreed upon by the therapist and couple." },
 ];
 
 const LUCY = {
@@ -32,7 +40,7 @@ const LUCY = {
 };
 
 const FAQS = [
-  { q: "Do we both need to attend?", a: "Most sessions involve both partners. Occasionally individual sessions may be recommended as part of the process." },
+  { q: "Do we both need to attend?", a: "Most sessions involve both partners. The intake process includes a joint 90-minute session followed by individual 30-minute sessions for each partner." },
   { q: "Is couples counselling covered by Medicare?", a: "Medicare doesn't cover couples sessions directly, but each partner can use a Mental Health Care Plan for individual sessions when clinically appropriate." },
   { q: "How many sessions will we need?", a: "This varies by couple. Many people notice meaningful change within 6–12 sessions, though this depends on the complexity of the concerns." },
   { q: "What is the Gottman Method?", a: "The Gottman Method is an evidence-based approach developed from over 40 years of research on what makes relationships succeed or fail. It builds friendship, manages conflict, and creates shared meaning." },
@@ -102,6 +110,21 @@ export default function CouplesHome() {
         </div>
       </section>
 
+      {/* What is couples counselling */}
+      <section className="bg-white py-16">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6">
+          <FadeIn>
+            <h2 className="font-lora text-3xl font-bold text-[#071B27] mb-6">What is couples counselling?</h2>
+            <p className="font-poppins text-cp-body text-sm leading-relaxed mb-4">
+              Couples counselling is a form of therapy that supports partners in improving and strengthening their relationship. Through structured sessions with a trained psychologist, couples explore the patterns, emotions, and dynamics that shape their connection.
+            </p>
+            <p className="font-poppins text-cp-body text-sm leading-relaxed">
+              Contemporary Psychology's process focuses on building healthy communication, resolving conflicts, deepening emotional intimacy, and fostering mutual understanding. Couples sessions are guided by the Gottman Method — a leading research-based approach to couples therapy. Our focus extends beyond resolving problems as they arise, instead prioritising educating and empowering couples to improve connection, communication, and conflict management through practical, evidence-based tools focused on long-term relationship health.
+            </p>
+          </FadeIn>
+        </div>
+      </section>
+
       {/* Why choose us */}
       <section className="bg-surface-warm py-16">
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
@@ -122,14 +145,41 @@ export default function CouplesHome() {
         </div>
       </section>
 
-      {/* Process */}
+      {/* Who is it for */}
       <section className="bg-white py-16">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6">
+          <FadeIn>
+            <h2 className="font-lora text-3xl font-bold text-[#071B27] mb-4">Who is couples counselling for?</h2>
+            <p className="font-poppins text-cp-body text-sm leading-relaxed mb-6">
+              There are many different reasons why couples seek therapy. Couples at all stages of their relationship can benefit from counselling — there is no right or wrong time or circumstance. Some of the more common reasons include:
+            </p>
+          </FadeIn>
+          <FadeIn delay={80}>
+            <ul className="space-y-3 mb-6">
+              {WHO_FOR.map((item, i) => (
+                <li key={i} className="flex items-start gap-3">
+                  <GradientBullet />
+                  <p className="font-poppins text-sm text-cp-body leading-relaxed">{item}</p>
+                </li>
+              ))}
+            </ul>
+          </FadeIn>
+          <FadeIn delay={160}>
+            <p className="font-poppins text-sm text-cp-body leading-relaxed">
+              Contrary to popular belief, couples counselling isn't only for those experiencing challenges. Many couples who are functioning well also find it valuable — whether preparing for major life transitions such as marriage, parenthood, or relocation, or simply wanting to strengthen their relationship foundations and maintain long-term connection.
+            </p>
+          </FadeIn>
+        </div>
+      </section>
+
+      {/* How it works */}
+      <section className="bg-surface-warm py-16">
         <div className="max-w-4xl mx-auto px-4 sm:px-6">
           <FadeIn>
-            <h2 className="font-lora text-3xl font-bold text-[#071B27] mb-10 text-center">What brings couples to therapy</h2>
+            <h2 className="font-lora text-3xl font-bold text-[#071B27] mb-10 text-center">How it works</h2>
           </FadeIn>
           <div className="space-y-6">
-            {PROCESS_STEPS.map((s, i) => (
+            {HOW_IT_WORKS.map((s, i) => (
               <FadeIn key={s.n} delay={i * 100}>
                 <div className="flex gap-6 items-start">
                   <span className="font-lora text-4xl font-bold cp-gradient-text flex-shrink-0 w-14">{s.n}</span>
@@ -141,11 +191,16 @@ export default function CouplesHome() {
               </FadeIn>
             ))}
           </div>
+          <FadeIn delay={400}>
+            <p className="font-poppins text-xs text-cp-muted mt-8 leading-relaxed">
+              More information can be emailed to you or explained by our reception team upon request.
+            </p>
+          </FadeIn>
         </div>
       </section>
 
       {/* Team */}
-      <section id="team" className="bg-surface-warm py-16">
+      <section id="team" className="bg-white py-16">
         <div className="max-w-3xl mx-auto px-4 sm:px-6">
           <FadeIn>
             <h2 className="font-lora text-3xl font-bold text-[#071B27] mb-3 text-center">Meet your therapist</h2>
@@ -202,7 +257,7 @@ export default function CouplesHome() {
       <section id="contact" className="py-16 border-t border-b border-[#C8E6F7]" style={{ background: "#EBF5FD" }}>
         <div className="max-w-3xl mx-auto px-4 sm:px-6">
           <h2 className="font-lora text-2xl font-bold text-[#071B27] mb-2">Book a couples session</h2>
-          <p className="font-poppins text-cp-muted text-sm mb-8">Sessions are 50 minutes. No referral required. You can use a Mental Health Care Plan for individual Medicare rebates. Our admin team will be in touch to confirm your booking at your specified contact time.</p>
+          <p className="font-poppins text-cp-muted text-sm mb-8">No referral required. You can use a Mental Health Care Plan for individual Medicare rebates. Our admin team will be in touch to confirm your booking at your specified contact time.</p>
           <AppointmentForm defaultServiceType="couples" />
         </div>
       </section>
