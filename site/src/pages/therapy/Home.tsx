@@ -27,6 +27,12 @@ const WHY_CARDS = [
 
 const TEAM = [
   {
+    name: "Claudia Hounslow", title: "Director & Psychologist", slug: "claudia-hounslow",
+    photo: "https://contemporarypsychology.com.au/images/team/claudia.png",
+    tags: ["Executive Coaching", "Neuropsychology", "Women in Leadership"],
+    bio: "Claudia is the director of Contemporary Psychology and has worked as a psychologist for over 18 years. She draws on neuropsychology, attachment theory, and executive coaching to support high performers, leaders, and health professionals.",
+  },
+  {
     name: "Rivkah Bendet", title: "Psychologist", slug: "rivkah-bendet",
     photo: "/assets/rivkah.jpg",
     tags: ["Anxiety", "Trauma", "Neurodivergent Adults"],

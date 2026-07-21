@@ -21,7 +21,8 @@ const CLINICIANS: Record<string, Clinician[]> = {
     { id: "lucy",   name: "Lucy Adlard",   title: "Psychologist", photo_url: "/assets/lucy.jpg" },
   ],
   "individual-therapy": [
-    { id: "rivkah", name: "Rivkah Bendet", title: "Psychologist",             photo_url: "/assets/rivkah.jpg" },
+    { id: "claudia", name: "Claudia Hounslow", title: "Director & Psychologist", photo_url: "https://contemporarypsychology.com.au/images/team/claudia.png" },
+    { id: "rivkah",  name: "Rivkah Bendet",   title: "Psychologist",             photo_url: "/assets/rivkah.jpg" },
     { id: "avi",    name: "Avi Winner",    title: "Psychologist",             photo_url: "/assets/avi.jpg" },
     { id: "david",  name: "David Bokan",   title: "Psychologist",             photo_url: "/assets/david.png" },
     { id: "bridget",name: "Bridget Kosmas",title: "Provisional Psychologist", photo_url: "/assets/bridget.png" },
