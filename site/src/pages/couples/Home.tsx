@@ -97,19 +97,6 @@ export default function CouplesHome() {
         </div>
       </section>
 
-      {/* Pricing callout */}
-      <section className="bg-surface-warm py-8">
-        <div className="max-w-2xl mx-auto px-4 sm:px-6">
-          <div className="rounded-2xl border border-cp-rule bg-white p-6 flex flex-col sm:flex-row items-center gap-4" style={{ boxShadow: "0 2px 16px 0 rgba(182,122,236,0.08)" }}>
-            <div className="flex-1">
-              <p className="font-lora text-2xl font-bold text-[#071B27]">From $260.30 per session</p>
-              <p className="font-poppins text-sm text-cp-muted mt-1">Medicare rebate $101.55 with a Mental Health Care Plan</p>
-            </div>
-            <a href={BOOK_URL} className="cp-gradient-bg text-white px-5 py-2.5 rounded-full font-poppins font-semibold text-sm whitespace-nowrap hover:opacity-90 transition-opacity">Book now</a>
-          </div>
-        </div>
-      </section>
-
       {/* What is couples counselling */}
       <section className="bg-white py-16">
         <div className="max-w-3xl mx-auto px-4 sm:px-6">
@@ -195,6 +182,60 @@ export default function CouplesHome() {
             <p className="font-poppins text-xs text-cp-muted mt-8 leading-relaxed">
               More information can be emailed to you or explained by our reception team upon request.
             </p>
+          </FadeIn>
+        </div>
+      </section>
+
+      {/* Pricing */}
+      <section className="bg-white py-12">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6">
+          <FadeIn>
+            <h2 className="font-lora text-2xl font-bold text-[#071B27] mb-1 text-center">Session fees</h2>
+            <p className="font-poppins text-sm text-cp-muted text-center mb-8">All fees are per session. Medicare rebates available with a Mental Health Care Plan.</p>
+          </FadeIn>
+          <FadeIn delay={80}>
+            <div className="rounded-2xl border border-cp-rule bg-white overflow-hidden" style={{ boxShadow: "0 2px 16px 0 rgba(182,122,236,0.08)" }}>
+              <table className="w-full text-sm font-poppins">
+                <thead>
+                  <tr className="border-b border-cp-rule">
+                    <th className="text-left px-5 py-3 text-xs font-semibold text-cp-muted uppercase tracking-wider">Session</th>
+                    <th className="text-left px-5 py-3 text-xs font-semibold text-cp-muted uppercase tracking-wider hidden sm:table-cell">Description</th>
+                    <th className="text-right px-5 py-3 text-xs font-semibold text-cp-muted uppercase tracking-wider">Before 4pm</th>
+                    <th className="text-right px-5 py-3 text-xs font-semibold text-cp-muted uppercase tracking-wider">After 4pm</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-cp-rule">
+                  <tr>
+                    <td className="px-5 py-4 font-semibold text-[#071B27] whitespace-nowrap">Session 1</td>
+                    <td className="px-5 py-4 text-cp-body hidden sm:table-cell">90-min joint intake session</td>
+                    <td className="px-5 py-4 text-right font-semibold text-[#071B27]">$360.00</td>
+                    <td className="px-5 py-4 text-right font-semibold text-[#071B27]">$370.00</td>
+                  </tr>
+                  <tr className="bg-[#FAFAFA]">
+                    <td className="px-5 py-4 font-semibold text-[#071B27] whitespace-nowrap">Session 2</td>
+                    <td className="px-5 py-4 text-cp-body hidden sm:table-cell">30-min individual session per partner</td>
+                    <td className="px-5 py-4 text-right font-semibold text-[#071B27]">$130.15</td>
+                    <td className="px-5 py-4 text-right font-semibold text-[#071B27]">$135.30</td>
+                  </tr>
+                  <tr>
+                    <td className="px-5 py-4 font-semibold text-[#071B27] whitespace-nowrap">Session 3</td>
+                    <td className="px-5 py-4 text-cp-body hidden sm:table-cell">60-min joint session</td>
+                    <td className="px-5 py-4 text-right font-semibold text-[#071B27]">$310.00</td>
+                    <td className="px-5 py-4 text-right font-semibold text-[#071B27]">$320.00</td>
+                  </tr>
+                  <tr className="bg-[#FAFAFA]">
+                    <td className="px-5 py-4 font-semibold text-[#071B27] whitespace-nowrap">Session 4+</td>
+                    <td className="px-5 py-4 text-cp-body hidden sm:table-cell">60-min joint session (ongoing)</td>
+                    <td className="px-5 py-4 text-right font-semibold text-[#071B27]">$260.30</td>
+                    <td className="px-5 py-4 text-right font-semibold text-[#071B27]">$270.45</td>
+                  </tr>
+                </tbody>
+              </table>
+              <div className="px-5 py-4 border-t border-cp-rule flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+                <p className="font-poppins text-xs text-cp-muted">Medicare rebate $101.55 per individual session with a valid Mental Health Care Plan.</p>
+                <a href={BOOK_URL} className="cp-gradient-bg text-white px-5 py-2 rounded-full font-poppins font-semibold text-xs whitespace-nowrap hover:opacity-90 transition-opacity flex-shrink-0">Book now</a>
+              </div>
+            </div>
           </FadeIn>
         </div>
       </section>
