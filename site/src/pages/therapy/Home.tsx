@@ -245,7 +245,7 @@ export default function TherapyHome() {
       <section id="contact" className="py-16 border-t border-b border-[#C8E6F7]" style={{ background: "#EBF5FD" }}>
         <div className="max-w-3xl mx-auto px-4 sm:px-6">
           <h2 className="font-lora text-2xl font-bold text-[#071B27] mb-2">Book an individual therapy session</h2>
-          <p className="font-poppins text-cp-muted text-sm mb-8">Sessions are 50 minutes. No referral required. Medicare rebates available with a Mental Health Care Plan. Our team will respond within one business day.</p>
+          <p className="font-poppins text-cp-muted text-sm mb-8">Sessions are 50 minutes. No referral required. Medicare rebates available with a Mental Health Care Plan. Our admin team will be in touch to confirm your booking at your specified contact time.</p>
           <AppointmentForm defaultServiceType="individual-therapy" />
         </div>
       </section>

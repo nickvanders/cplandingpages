@@ -441,7 +441,7 @@ export default function ADHDHome() {
       <section id="contact" className="py-16 border-t border-b border-[#C8E6F7]" style={{ background: "#EBF5FD" }}>
         <div className="max-w-3xl mx-auto px-4 sm:px-6">
           <h2 className="font-lora text-2xl font-bold text-[#071B27] mb-2">Book your ADHD assessment</h2>
-          <p className="font-poppins text-cp-muted text-sm mb-8">No GP referral required. Appointments available within 1 to 2 weeks. Our admin team will confirm your booking within one business day.</p>
+          <p className="font-poppins text-cp-muted text-sm mb-8">No GP referral required. Appointments available within 1 week. Our admin team will be in touch to confirm your booking at your specified contact time.</p>
           <AppointmentForm defaultServiceType="adhd-assessment" />
         </div>
       </section>

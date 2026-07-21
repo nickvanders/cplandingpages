@@ -1,6 +1,6 @@
 import { useState, useRef } from "react";
 import { motion } from "framer-motion";
-import { Send, X, AlertCircle, CheckCircle, Phone } from "lucide-react";
+import { Send, X, AlertCircle, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -243,13 +243,11 @@ export function AppointmentForm({ defaultServiceType = "", source }: { defaultSe
   if (submitted) {
     return (
       <div className="rounded-2xl bg-white border border-cp-rule p-8 text-center space-y-6" style={{ boxShadow: "0 2px 16px 0 rgba(182,122,236,0.08)" }}>
-        <div className="flex items-center justify-center w-14 h-14 rounded-full mx-auto" style={{ background: "linear-gradient(135deg, #F2506A20, #B67AEC20)" }}>
-          <CheckCircle className="w-7 h-7" style={{ color: "#B67AEC" }} />
-        </div>
+        <img src="/favicon.png" alt="Contemporary Psychology" className="w-14 h-14 mx-auto" />
         <div>
           <h3 className="font-lora font-bold text-[#071B27] text-2xl mb-2">Thanks, {submitted.first_name}!</h3>
           <p className="font-poppins text-cp-body text-sm leading-relaxed max-w-md mx-auto">
-            Your enquiry has been received. We'll be in touch{submitted.callback_time ? ` during ${submitted.callback_time.toLowerCase()}` : " within one business day"}.
+            Your enquiry has been received. Our admin team will be in touch to confirm your booking{submitted.callback_time ? ` at your specified contact time (${submitted.callback_time.toLowerCase()})` : " at your specified contact time"}.
           </p>
         </div>
         <div className="border-t border-cp-rule pt-6">
