@@ -15,7 +15,6 @@ const CLINICIANS: Record<string, Clinician[]> = {
   "asd-assessment": [
     { id: "rivkah", name: "Rivkah Bendet", title: "Psychologist", photo_url: "/assets/rivkah.jpg" },
     { id: "avi",    name: "Avi Winner",    title: "Psychologist", photo_url: "/assets/avi.jpg" },
-    { id: "david",  name: "David Bokan",   title: "Psychologist", photo_url: "/assets/david.png" },
   ],
   "couples": [
     { id: "lucy",   name: "Lucy Adlard",   title: "Psychologist", photo_url: "/assets/lucy.jpg" },
