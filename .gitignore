@@ -3,3 +3,7 @@ dist
 .DS_Store
 *-extracted/
 *.tar.gz
+.env
+.env.local
+site/.env
+site/.env.local
