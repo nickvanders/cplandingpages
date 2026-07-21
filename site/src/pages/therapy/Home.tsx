@@ -35,7 +35,7 @@ const WHY_CARDS = [
 const TEAM = [
   {
     name: "Claudia Hounslow", title: "Director & Psychologist", slug: "claudia-hounslow",
-    photo: "https://contemporarypsychology.com.au/images/team/claudia.png",
+    photo: "/assets/claudia.png",
     tags: ["Executive Coaching", "Neuropsychology", "Women in Leadership"],
     bio: "Claudia is the director of Contemporary Psychology with over 18 years of experience as a psychologist. She draws on neuropsychology, executive coaching, and attachment theory.",
   },
