@@ -11,11 +11,18 @@ const BADGE_COLOR = "#9B51E0";
 
 const TRUST_BADGES = ["AHPRA-registered", "Medicare rebates available", "No referral required", "In-person + telehealth"];
 
-const PROCESS_STEPS = [
-  { n: "01", title: "Anxiety and stress", body: "Racing thoughts, persistent worry, panic, and burnout affecting everyday life can all be addressed within a supportive, evidence-based therapeutic relationship." },
-  { n: "02", title: "Depression and low mood", body: "Persistent feelings of hopelessness, withdrawal, or difficulty experiencing pleasure are common reasons people seek individual psychological support." },
-  { n: "03", title: "Trauma and PTSD", body: "Processing difficult past experiences in a structured, trauma-informed environment with a registered psychologist who can guide recovery at your pace." },
-  { n: "04", title: "Life transitions and adjustment", body: "Relationship changes, career shifts, grief, identity questions, or major life decisions can all benefit from skilled psychological support." },
+const MAIN = "https://contemporarypsychology.com.au";
+
+const SERVICE_AREAS = [
+  { title: "Anxiety Disorders",               body: "Support for generalised anxiety, panic, social anxiety, phobias, and related presentations.",                          href: `${MAIN}/what-we-help-with/anxiety-disorders` },
+  { title: "Depression",                      body: "Evidence-informed support for low mood, anhedonia, and depressive episodes.",                                          href: `${MAIN}/what-we-help-with/depression` },
+  { title: "Trauma and Acute Stress",         body: "Trauma-informed psychological support for a range of distressing experiences.",                                        href: `${MAIN}/what-we-help-with/trauma-and-acute-stress` },
+  { title: "Work Issues and Burnout",         body: "Support for workplace stress, burnout, occupational difficulties, and career transitions.",                            href: `${MAIN}/what-we-help-with/work-issues-burnout` },
+  { title: "Disordered Eating and Body Image",body: "Compassionate, evidence-based support for eating difficulties and body image concerns.",                               href: `${MAIN}/what-we-help-with/disordered-eating-body-image` },
+  { title: "Sleep Disturbance",               body: "Evidence-based psychological approaches to insomnia and sleep difficulties.",                                          href: `${MAIN}/what-we-help-with/sleep-disturbance` },
+  { title: "LGBTIQA+ Counselling",            body: "Affirming psychological support for LGBTIQA+ individuals and their unique experiences.",                               href: `${MAIN}/what-we-help-with/lgbtiqa-counselling` },
+  { title: "PMDD, PCOS and Menopause",        body: "Psychological support for the mental health dimensions of hormonal health conditions.",                                href: `${MAIN}/what-we-help-with/pmdd-pcos-menopause` },
+  { title: "Postnatal Depression and Anxiety",body: "Support for new parents navigating the psychological challenges of early parenthood.",                                 href: `${MAIN}/what-we-help-with/postnatal-depression-anxiety` },
 ];
 
 const WHY_CARDS = [
@@ -30,13 +37,13 @@ const TEAM = [
     name: "Claudia Hounslow", title: "Director & Psychologist", slug: "claudia-hounslow",
     photo: "https://contemporarypsychology.com.au/images/team/claudia.png",
     tags: ["Executive Coaching", "Neuropsychology", "Women in Leadership"],
-    bio: "Claudia is the director of Contemporary Psychology and has worked as a psychologist for over 18 years. She draws on neuropsychology, attachment theory, and executive coaching to support high performers, leaders, and health professionals.",
+    bio: "Claudia is the director of Contemporary Psychology with over 18 years of experience as a psychologist. She draws on neuropsychology, executive coaching, and attachment theory.",
   },
   {
     name: "Rivkah Bendet", title: "Psychologist", slug: "rivkah-bendet",
     photo: "/assets/rivkah.jpg",
     tags: ["Anxiety", "Trauma", "Neurodivergent Adults"],
-    bio: "Rivkah has experience working with adults and adolescents across anxiety, trauma, and neurodevelopmental presentations, drawing on evidence-based approaches tailored to each individual.",
+    bio: "Rivkah has experience working with adults and adolescents across anxiety, trauma, and neurodevelopmental presentations, drawing on evidence-based approaches.",
   },
   {
     name: "Avi Winner", title: "Psychologist", slug: "avi-winner",
@@ -48,7 +55,7 @@ const TEAM = [
     name: "David Bokan", title: "Psychologist", slug: "david-bokan",
     photo: "/assets/david.png",
     tags: ["Anxiety", "Stress", "Life Transitions"],
-    bio: "David has experience supporting adults navigating anxiety, stress, and significant life transitions, with a focus on practical, evidence-based strategies.",
+    bio: "David has experience supporting adults navigating anxiety, stress, and significant life transitions, drawing on practical, evidence-based psychological strategies.",
   },
   {
     name: "Bridget Kosmas", title: "Provisional Psychologist", slug: "bridget-kosmas",
@@ -60,7 +67,7 @@ const TEAM = [
     name: "Lucy Adlard", title: "Psychologist", slug: "lucy-adlard",
     photo: "/assets/lucy.jpg",
     tags: ["Relationships", "Communication", "Adjustment"],
-    bio: "Lucy has experience in individual therapy with a particular interest in relationship dynamics, communication, and adjustment across life transitions.",
+    bio: "Lucy has experience in individual and couples therapy, with a particular interest in relationship dynamics, communication, and adjustment across life transitions.",
   },
 ];
 
@@ -157,20 +164,19 @@ export default function TherapyHome() {
 
       {/* What we help with */}
       <section className="bg-white py-16">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6">
           <FadeIn>
             <h2 className="font-lora text-3xl font-bold text-[#071B27] mb-10 text-center">What we help with</h2>
           </FadeIn>
-          <div className="space-y-6">
-            {PROCESS_STEPS.map((s, i) => (
-              <FadeIn key={s.n} delay={i * 100}>
-                <div className="flex gap-6 items-start">
-                  <span className="font-lora text-4xl font-bold cp-gradient-text flex-shrink-0 w-14">{s.n}</span>
-                  <div className="pt-2">
-                    <h3 className="font-lora font-bold text-[#071B27] text-xl mb-1">{s.title}</h3>
-                    <p className="font-poppins text-sm text-cp-body">{s.body}</p>
-                  </div>
-                </div>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {SERVICE_AREAS.map((s, i) => (
+              <FadeIn key={s.title} delay={i * 60}>
+                <a href={s.href} className="group block bg-white rounded-2xl p-5 border border-cp-rule relative overflow-hidden hover:border-[#B67AEC] transition-colors h-full" style={{ boxShadow: "0 2px 16px 0 rgba(182,122,236,0.06)" }}>
+                  <div className="absolute left-0 top-0 bottom-0 w-1 rounded-l-2xl" style={{ background: "linear-gradient(to bottom, #F2506A, #B67AEC, #27BBE9)" }} />
+                  <h3 className="font-lora font-bold text-[#071B27] text-base mb-1.5 group-hover:text-brand-purple transition-colors">{s.title}</h3>
+                  <p className="font-poppins text-xs text-cp-body leading-relaxed">{s.body}</p>
+                  <p className="font-poppins text-xs font-medium mt-3" style={{ color: "#B67AEC" }}>Learn more →</p>
+                </a>
               </FadeIn>
             ))}
           </div>
@@ -187,11 +193,11 @@ export default function TherapyHome() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {TEAM.map((m, i) => (
               <FadeIn key={m.name} delay={i * 80}>
-                <div className="bg-white rounded-2xl border border-[#E5E7EB] overflow-hidden" style={{ boxShadow: "0 2px 16px 0 rgba(182,122,236,0.08)" }}>
-                  <div className="aspect-square bg-[#F5EEFF] overflow-hidden">
+                <div className="bg-white rounded-2xl border border-[#E5E7EB] overflow-hidden flex flex-col h-full" style={{ boxShadow: "0 2px 16px 0 rgba(182,122,236,0.08)" }}>
+                  <div className="aspect-square bg-[#F5EEFF] overflow-hidden flex-shrink-0">
                     <img src={m.photo} alt={m.name} className="w-full h-full object-cover object-top" onError={e => { (e.target as HTMLImageElement).style.display = "none"; }} />
                   </div>
-                  <div className="p-5">
+                  <div className="p-5 flex flex-col flex-1">
                     <h3 className="font-lora font-bold text-[#071B27] text-lg leading-tight">{m.name}</h3>
                     <p className="font-poppins text-sm text-[#6B7280] mt-0.5 mb-3">{m.title}</p>
                     <div className="flex flex-wrap gap-1.5 mb-3">
@@ -199,7 +205,7 @@ export default function TherapyHome() {
                         <span key={t} className="px-2 py-0.5 rounded-full text-xs font-poppins font-medium" style={{ background: "#F5EEFF", color: "#9B51E0" }}>{t}</span>
                       ))}
                     </div>
-                    <p className="font-poppins text-xs text-[#374151] mb-4 leading-relaxed">{m.bio}</p>
+                    <p className="font-poppins text-xs text-[#374151] leading-relaxed flex-1 mb-4">{m.bio}</p>
                     <a href={`https://contemporarypsychology.com.au/our-team/${m.slug}`} className="font-poppins text-xs font-medium hover:underline" style={{ color: "#B67AEC" }}>View profile →</a>
                   </div>
                 </div>
