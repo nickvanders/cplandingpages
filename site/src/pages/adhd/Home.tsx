@@ -127,7 +127,7 @@ export default function ADHDHome() {
               <a href={PHONE_HREF} className="flex items-center gap-2 bg-white text-[#071B27] px-6 py-3 rounded-full font-poppins font-semibold text-sm hover:shadow-md transition-shadow">
                 <Phone className="w-4 h-4" />{PHONE}
               </a>
-              <a href={BOOK_URL} className="cp-gradient-bg text-white px-6 py-3 rounded-full font-poppins font-semibold text-sm hover:opacity-90 transition-opacity">
+              <a href="#contact" className="cp-gradient-bg text-white px-6 py-3 rounded-full font-poppins font-semibold text-sm hover:opacity-90 transition-opacity">
                 Book Online
               </a>
             </div>
@@ -143,7 +143,7 @@ export default function ADHDHome() {
               <p className="font-lora text-2xl font-bold text-[#071B27]">From $1,545.90</p>
               <p className="font-poppins text-sm text-cp-muted mt-1">3 assessment sessions + written report + feedback session</p>
             </div>
-            <a href={BOOK_URL} className="cp-gradient-bg text-white px-5 py-2.5 rounded-full font-poppins font-semibold text-sm whitespace-nowrap hover:opacity-90 transition-opacity">Book now</a>
+            <a href="#contact" className="cp-gradient-bg text-white px-5 py-2.5 rounded-full font-poppins font-semibold text-sm whitespace-nowrap hover:opacity-90 transition-opacity">Book now</a>
           </div>
         </div>
       </section>
@@ -276,7 +276,7 @@ export default function ADHDHome() {
                 <div className="flex-1">
                   <h3 className="font-lora text-xl font-bold text-white mb-2">Collaborative ADHD care in Melbourne</h3>
                   <p className="font-poppins text-sm text-white/70 mb-4">Our registered psychologists integrate evidence based assessment with a neuroscience informed perspective. We emphasise collaboration, supporting clients with education, validation, and practical tools rather than one size fits all methods.</p>
-                  <a href={BOOK_URL} className="inline-block cp-gradient-bg text-white px-6 py-3 rounded-full font-poppins font-semibold text-sm hover:opacity-90 transition-opacity">
+                  <a href="#contact" className="inline-block cp-gradient-bg text-white px-6 py-3 rounded-full font-poppins font-semibold text-sm hover:opacity-90 transition-opacity">
                     Start your ADHD journey
                   </a>
                 </div>
@@ -456,7 +456,7 @@ export default function ADHDHome() {
             <a href={PHONE_HREF} className="flex items-center gap-2 bg-white text-[#071B27] px-6 py-3 rounded-full font-poppins font-semibold text-sm hover:shadow-md transition-shadow">
               <Phone className="w-4 h-4" />{PHONE}
             </a>
-            <a href={BOOK_URL} className="cp-gradient-bg text-white px-6 py-3 rounded-full font-poppins font-semibold text-sm hover:opacity-90 transition-opacity">
+            <a href="#contact" className="cp-gradient-bg text-white px-6 py-3 rounded-full font-poppins font-semibold text-sm hover:opacity-90 transition-opacity">
               Book Online
             </a>
           </div>

@@ -121,7 +121,7 @@ export default function TherapyHome() {
               <a href={PHONE_HREF} className="flex items-center gap-2 bg-white text-[#071B27] px-6 py-3 rounded-full font-poppins font-semibold text-sm hover:shadow-md transition-shadow">
                 <Phone className="w-4 h-4" />{PHONE}
               </a>
-              <a href={BOOK_URL} className="cp-gradient-bg text-white px-6 py-3 rounded-full font-poppins font-semibold text-sm hover:opacity-90 transition-opacity">
+              <a href="#contact" className="cp-gradient-bg text-white px-6 py-3 rounded-full font-poppins font-semibold text-sm hover:opacity-90 transition-opacity">
                 Book Online
               </a>
             </div>
@@ -137,7 +137,7 @@ export default function TherapyHome() {
               <p className="font-lora text-2xl font-bold text-[#071B27]">From $260.30 per session</p>
               <p className="font-poppins text-sm text-cp-muted mt-1">Medicare rebate $101.55 with a Mental Health Care Plan</p>
             </div>
-            <a href={BOOK_URL} className="cp-gradient-bg text-white px-5 py-2.5 rounded-full font-poppins font-semibold text-sm whitespace-nowrap hover:opacity-90 transition-opacity">Book now</a>
+            <a href="#contact" className="cp-gradient-bg text-white px-5 py-2.5 rounded-full font-poppins font-semibold text-sm whitespace-nowrap hover:opacity-90 transition-opacity">Book now</a>
           </div>
         </div>
       </section>
@@ -260,7 +260,7 @@ export default function TherapyHome() {
             <a href={PHONE_HREF} className="flex items-center gap-2 bg-white text-[#071B27] px-6 py-3 rounded-full font-poppins font-semibold text-sm hover:shadow-md transition-shadow">
               <Phone className="w-4 h-4" />{PHONE}
             </a>
-            <a href={BOOK_URL} className="cp-gradient-bg text-white px-6 py-3 rounded-full font-poppins font-semibold text-sm hover:opacity-90 transition-opacity">
+            <a href="#contact" className="cp-gradient-bg text-white px-6 py-3 rounded-full font-poppins font-semibold text-sm hover:opacity-90 transition-opacity">
               Book Online
             </a>
           </div>

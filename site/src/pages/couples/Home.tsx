@@ -89,7 +89,7 @@ export default function CouplesHome() {
               <a href={PHONE_HREF} className="flex items-center gap-2 bg-white text-[#071B27] px-6 py-3 rounded-full font-poppins font-semibold text-sm hover:shadow-md transition-shadow">
                 <Phone className="w-4 h-4" />{PHONE}
               </a>
-              <a href={BOOK_URL} className="cp-gradient-bg text-white px-6 py-3 rounded-full font-poppins font-semibold text-sm hover:opacity-90 transition-opacity">
+              <a href="#contact" className="cp-gradient-bg text-white px-6 py-3 rounded-full font-poppins font-semibold text-sm hover:opacity-90 transition-opacity">
                 Book Online
               </a>
             </div>
@@ -233,7 +233,7 @@ export default function CouplesHome() {
               </table>
               <div className="px-5 py-4 border-t border-cp-rule flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
                 <p className="font-poppins text-xs text-cp-muted">Medicare rebate $101.55 per individual session with a valid Mental Health Care Plan.</p>
-                <a href={BOOK_URL} className="cp-gradient-bg text-white px-5 py-2 rounded-full font-poppins font-semibold text-xs whitespace-nowrap hover:opacity-90 transition-opacity flex-shrink-0">Book now</a>
+                <a href="#contact" className="cp-gradient-bg text-white px-5 py-2 rounded-full font-poppins font-semibold text-xs whitespace-nowrap hover:opacity-90 transition-opacity flex-shrink-0">Book now</a>
               </div>
             </div>
           </FadeIn>
@@ -313,7 +313,7 @@ export default function CouplesHome() {
             <a href={PHONE_HREF} className="flex items-center gap-2 bg-white text-[#071B27] px-6 py-3 rounded-full font-poppins font-semibold text-sm hover:shadow-md transition-shadow">
               <Phone className="w-4 h-4" />{PHONE}
             </a>
-            <a href={BOOK_URL} className="cp-gradient-bg text-white px-6 py-3 rounded-full font-poppins font-semibold text-sm hover:opacity-90 transition-opacity">
+            <a href="#contact" className="cp-gradient-bg text-white px-6 py-3 rounded-full font-poppins font-semibold text-sm hover:opacity-90 transition-opacity">
               Book Online
             </a>
           </div>
