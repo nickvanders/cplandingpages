@@ -285,7 +285,7 @@ export default function ASDHome() {
             {TEAM.map((m, i) => (
               <FadeIn key={m.name} delay={i * 80}>
                 <div className="bg-white rounded-2xl border border-[#E5E7EB] overflow-hidden" style={{ boxShadow: "0 2px 16px 0 rgba(182,122,236,0.08)" }}>
-                  <div className="aspect-[4/3] bg-[#F5EEFF] overflow-hidden">
+                  <div className="aspect-square bg-[#F5EEFF] overflow-hidden">
                     <img src={m.photo} alt={m.name} className="w-full h-full object-cover object-top" onError={e => { (e.target as HTMLImageElement).style.display = "none"; }} />
                   </div>
                   <div className="p-5">

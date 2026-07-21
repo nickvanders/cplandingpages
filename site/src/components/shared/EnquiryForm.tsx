@@ -109,7 +109,13 @@ function MedicationDisclaimerModal({ onConfirm, onCancel }: { onConfirm: () => v
   );
 }
 
-export function AppointmentForm({ defaultServiceType = "" }: { defaultServiceType?: string } = {}) {
+const SOURCE_LABELS: Record<string, string> = {
+  "adhd-assessment": "adhd-landing-page",
+  "asd-assessment":  "asd-landing-page",
+  "couples":         "couples-landing-page",
+};
+
+export function AppointmentForm({ defaultServiceType = "", source }: { defaultServiceType?: string; source?: string } = {}) {
   const [, navigate] = useLocation();
   const [data, setData] = useState<FormData>({ ...EMPTY, service_type: defaultServiceType });
   const [errors, setErrors] = useState<Errors>({});
@@ -191,6 +197,7 @@ export function AppointmentForm({ defaultServiceType = "" }: { defaultServiceTyp
             ].filter(Boolean).join("\n") || null,
             date_enquired: new Date().toISOString().split("T")[0],
             sync_source: "landing-page",
+            source: source ?? SOURCE_LABELS[defaultServiceType] ?? "landing-page",
             lead_status: "new",
             gclid: attribution?.gclid ?? null,
           });
