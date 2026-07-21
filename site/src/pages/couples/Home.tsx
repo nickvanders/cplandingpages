@@ -1,6 +1,6 @@
 import LandingNav from "../../components/LandingNav";
 import ParticleBackground from "../../components/shared/ParticleBackground";
-import EnquiryForm from "../../components/shared/EnquiryForm";
+import { AppointmentForm } from "../../components/shared/EnquiryForm";
 import { FadeIn } from "../../components/shared/FadeIn";
 import { GradientBullet } from "../../components/shared/GradientBullet";
 import { Phone, CheckCircle, ChevronDown } from "lucide-react";
@@ -200,12 +200,10 @@ export default function CouplesHome() {
 
       {/* Enquiry Form */}
       <section className="bg-white py-16">
-        <div className="max-w-2xl mx-auto px-4 sm:px-6">
-          <EnquiryForm
-            page="couples"
-            heading="Book a couples session"
-            subtext="Sessions are 50 minutes. No referral required. You can use a Mental Health Care Plan for individual Medicare rebates. Our team will respond within one business day."
-          />
+        <div className="max-w-3xl mx-auto px-4 sm:px-6">
+          <h2 className="font-lora text-2xl font-bold text-[#071B27] mb-2">Book a couples session</h2>
+          <p className="font-poppins text-cp-muted text-sm mb-8">Sessions are 50 minutes. No referral required. You can use a Mental Health Care Plan for individual Medicare rebates. Our team will respond within one business day.</p>
+          <AppointmentForm defaultServiceType="couples" />
         </div>
       </section>
 

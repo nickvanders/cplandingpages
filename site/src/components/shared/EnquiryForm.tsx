@@ -1,155 +1,382 @@
-import { useState } from "react";
-import { CheckCircle, Phone } from "lucide-react";
-import { PHONE_HREF, PHONE } from "./constants";
+import { useState, useRef } from "react";
+import { useLocation } from "wouter";
+import { motion } from "framer-motion";
+import { Send, X, AlertCircle } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { cn } from "@/lib/utils";
+import { supabase } from "@/lib/supabase";
+import { getStoredAttribution, getSubmissionMeta } from "@/lib/attribution";
+import { useCliniciansForService } from "@/hooks/useCliniciansForService";
 
-interface Props {
-  page: "adhd" | "asd" | "couples";
-  heading: string;
-  subtext: string;
-}
+const container = {
+  hidden: { opacity: 0 },
+  show: { opacity: 1, transition: { staggerChildren: 0.08 } },
+};
+const item = {
+  hidden: { opacity: 0, y: 14 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.28, ease: "easeOut" } },
+};
 
-const ENQUIRY_TYPES = [
-  "Initial enquiry",
-  "Assessment booking",
-  "Ongoing therapy",
-  "Not sure yet",
+const SERVICES = [
+  { value: "adhd-assessment",    label: "ADHD Assessment" },
+  { value: "asd-assessment",     label: "ASD Assessment" },
+  { value: "individual-therapy", label: "Individual Therapy" },
+  { value: "couples",            label: "Couples Counselling" },
+  { value: "coaching",           label: "Coaching" },
+  { value: "workcover-tac",      label: "WorkCover & TAC" },
+] as const;
+
+const REFERRAL_OPTIONS = [
+  "Google",
+  "Instagram",
+  "Facebook",
+  "LinkedIn",
+  "GP or specialist referral",
+  "Referral from friend or family",
+  "Psychology Today",
+  "Substack",
+  "Other",
 ];
 
-export default function EnquiryForm({ page, heading, subtext }: Props) {
-  const [fields, setFields] = useState({
-    first_name: "", last_name: "", email: "", phone: "",
-    enquiry_type: "", message: "", consent: false,
-  });
-  const [errors, setErrors] = useState<Record<string, string>>({});
+const SERVICE_GTM_EVENTS: Record<string, string> = {
+  "adhd-assessment":    "conversion_adhd-assessment",
+  "asd-assessment":     "conversion_asd-assessment",
+  "individual-therapy": "conversion_individual-therapy",
+  "couples":            "conversion_couples",
+  "coaching":           "conversion_coaching",
+  "workcover-tac":      "conversion_workcover-tac",
+};
+
+interface FormData {
+  first_name: string;
+  last_name: string;
+  email: string;
+  phone: string;
+  postcode: string;
+  service_type: string;
+  preferred_clinician: string;
+  callback_time: string;
+  referral_source: string;
+  message: string;
+}
+
+type Errors = Partial<Record<keyof FormData | "form", string>>;
+
+const EMPTY: FormData = {
+  first_name: "", last_name: "", email: "", phone: "", postcode: "",
+  service_type: "", preferred_clinician: "", callback_time: "",
+  referral_source: "", message: "",
+};
+
+function MedicationDisclaimerModal({ onConfirm, onCancel }: { onConfirm: () => void; onCancel: () => void }) {
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4" role="dialog" aria-modal="true">
+      <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" onClick={onCancel} />
+      <div className="relative bg-white rounded-2xl shadow-xl max-w-md w-full p-8 z-10">
+        <button onClick={onCancel} className="absolute top-4 right-4 text-[#6B7280] hover:text-[#071B27] transition-colors" aria-label="Close">
+          <X className="h-5 w-5" />
+        </button>
+        <div className="flex items-center justify-center w-14 h-14 rounded-full bg-[#FFF0F2] mb-5 mx-auto">
+          <AlertCircle className="h-7 w-7 text-[#F2506A]" />
+        </div>
+        <h3 className="font-lora font-bold text-[#071B27] text-xl text-center mb-3">Please note before booking</h3>
+        <p className="font-poppins text-sm text-[#374151] leading-relaxed text-center mb-4">
+          Contemporary Psychology provides <strong className="text-[#071B27]">psychological assessment and support</strong> for ADHD. We do not prescribe or manage medication.
+        </p>
+        <p className="font-poppins text-sm text-[#6B7280] leading-relaxed text-center mb-7">
+          If you are seeking a medication prescription or review, please speak with your GP or a psychiatrist. Our assessment report can support that process if required.
+        </p>
+        <div className="flex flex-col gap-3">
+          <button onClick={onConfirm} className="w-full rounded-full text-white font-semibold font-poppins text-sm px-6 py-3 transition-opacity hover:opacity-90" style={{ background: "linear-gradient(135deg, #F2506A 0%, #B67AEC 50%, #9B51E0 100%)" }}>
+            I understand, continue
+          </button>
+          <button onClick={onCancel} className="w-full rounded-full border-2 border-[#E5E7EB] text-[#6B7280] font-semibold font-poppins text-sm px-6 py-3 hover:border-[#071B27] hover:text-[#071B27] transition-colors">
+            Go back
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export function AppointmentForm({ defaultServiceType = "" }: { defaultServiceType?: string } = {}) {
+  const [, navigate] = useLocation();
+  const [data, setData] = useState<FormData>({ ...EMPTY, service_type: defaultServiceType });
+  const [errors, setErrors] = useState<Errors>({});
   const [submitting, setSubmitting] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
+  const [pendingService, setPendingService] = useState<string | null>(null);
+  const hasStartedRef = useRef(false);
 
-  const set = (k: string, v: string | boolean) => setFields(f => ({ ...f, [k]: v }));
+  const availableClinicians = useCliniciansForService(data.service_type || null);
 
-  const validate = () => {
-    const e: Record<string, string> = {};
-    if (!fields.first_name.trim()) e.first_name = "Required";
-    if (!fields.last_name.trim()) e.last_name = "Required";
-    if (!fields.email.trim() || !/\S+@\S+\.\S+/.test(fields.email)) e.email = "Valid email required";
-    if (!fields.phone.trim()) e.phone = "Required";
-    if (!fields.enquiry_type) e.enquiry_type = "Please select an option";
-    if (!fields.consent) e.consent = "Consent required";
-    return e;
-  };
+  function set<K extends keyof FormData>(key: K, value: FormData[K]) {
+    if (!hasStartedRef.current) {
+      hasStartedRef.current = true;
+      (window as any).dataLayer?.push({ event: "form_start", form_id: "appointment_request" });
+    }
+    setData((prev) => ({ ...prev, [key]: value }));
+    if (errors[key]) setErrors((prev) => ({ ...prev, [key]: undefined }));
+  }
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  function handleServiceChange(value: string) {
+    if (value === "adhd-assessment") {
+      setPendingService(value);
+    } else {
+      set("service_type", value);
+      set("preferred_clinician", "");
+    }
+  }
+
+  function confirmDisclaimer() {
+    if (pendingService) {
+      set("service_type", pendingService);
+      set("preferred_clinician", "");
+    }
+    setPendingService(null);
+  }
+
+  function validate(): boolean {
+    const e: Errors = {};
+    if (!data.first_name.trim()) e.first_name = "First name is required.";
+    if (!data.last_name.trim()) e.last_name = "Last name is required.";
+    if (!data.email.trim()) {
+      e.email = "Email is required.";
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) {
+      e.email = "Please enter a valid email.";
+    }
+    if (!data.phone.trim()) e.phone = "Phone is required.";
+    if (!data.postcode.trim()) e.postcode = "Postcode is required.";
+    if (!data.service_type) e.service_type = "Please select a service.";
+    if (!data.callback_time.trim()) e.callback_time = "Please let us know when to contact you.";
+    if (!data.referral_source) e.referral_source = "Please let us know how you heard about us.";
+    setErrors(e);
+    return Object.keys(e).length === 0;
+  }
+
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    const errs = validate();
-    if (Object.keys(errs).length) { setErrors(errs); return; }
-    setErrors({});
+    if (!validate()) return;
     setSubmitting(true);
+    setErrors({});
+
     try {
-      const supabaseUrl = (import.meta as any).env?.VITE_SUPABASE_URL;
-      const supabaseKey = (import.meta as any).env?.VITE_SUPABASE_ANON_KEY;
-      if (supabaseUrl && supabaseKey) {
-        const { createClient } = await import("@supabase/supabase-js");
-        const supabase = createClient(supabaseUrl, supabaseKey);
-        await supabase.from("landing_page_enquiries").insert({
-          page,
-          first_name: fields.first_name,
-          last_name: fields.last_name,
-          email: fields.email,
-          phone: fields.phone,
-          enquiry_type: fields.enquiry_type,
-          message: fields.message || null,
-          created_at: new Date().toISOString(),
-        });
+      const attribution = getStoredAttribution();
+      const meta = getSubmissionMeta();
+
+      if (supabase) {
+        const { error: dbError } = await supabase
+          .from("enquiries")
+          .insert({
+            first_name: data.first_name,
+            last_name: data.last_name,
+            email: data.email,
+            phone: data.phone,
+            enquiry_type: data.service_type,
+            assigned_psych: data.preferred_clinician || null,
+            enquiry_details: [
+              data.message,
+              data.callback_time ? `Best time to call: ${data.callback_time}` : null,
+              data.referral_source ? `Heard about us via: ${data.referral_source}` : null,
+              `Postcode: ${data.postcode}`,
+            ].filter(Boolean).join("\n") || null,
+            date_enquired: new Date().toISOString().split("T")[0],
+            sync_source: "landing-page",
+            lead_status: "new",
+            gclid: attribution?.gclid ?? null,
+          });
+        if (dbError) throw dbError;
       } else {
-        console.log("Form submission (no Supabase configured):", { page, ...fields });
+        console.log("[EnquiryForm] No Supabase configured:", data);
       }
-      if (typeof window !== "undefined" && (window as any).gtag) {
-        (window as any).gtag("event", "conversion", {
-          send_to: "AW-XXXXXXXXXX/XXXXXXXXXXXXXXXX",
+
+      (window as any).dataLayer?.push({
+        event: "appointment_request_submitted",
+        service_requested: data.service_type,
+        referral_source: data.referral_source,
+        is_out_of_hours: meta.is_out_of_hours,
+        utm_source: attribution?.utm_source,
+        utm_campaign: attribution?.utm_campaign,
+        gclid: attribution?.gclid,
+      });
+
+      if (data.service_type && SERVICE_GTM_EVENTS[data.service_type]) {
+        (window as any).dataLayer?.push({
+          event: SERVICE_GTM_EVENTS[data.service_type],
+          service_requested: data.service_type,
         });
       }
-      setSubmitted(true);
+
+      navigate("/thank-you");
     } catch (err) {
-      console.error(err);
-      setErrors({ submit: "Something went wrong. Please call us directly." });
+      console.error("[AppointmentForm] Supabase insert failed:", err);
+      setErrors({ form: "Something went wrong. Please call us directly or try again." });
     } finally {
       setSubmitting(false);
     }
-  };
-
-  const inputCls = (field: string) =>
-    `w-full rounded-lg border px-4 py-2.5 font-poppins text-sm text-[#071B27] focus:outline-none focus:ring-2 focus:ring-brand-purple/30 focus:border-brand-purple transition-colors ${errors[field] ? "border-brand-pink" : "border-cp-rule"}`;
-
-  if (submitted) {
-    return (
-      <div className="bg-white rounded-2xl p-8 border border-cp-rule relative overflow-hidden text-center" style={{ boxShadow: "0 2px 16px 0 rgba(182,122,236,0.08)" }}>
-        <div className="absolute left-0 top-0 bottom-0 w-1.5 rounded-l-2xl" style={{ background: "linear-gradient(to bottom, #F2506A, #B67AEC, #27BBE9)" }} />
-        <div className="flex justify-center mb-4">
-          <CheckCircle className="w-14 h-14 text-brand-purple" />
-        </div>
-        <h3 className="font-lora text-2xl font-bold text-[#071B27] mb-2">Thank you!</h3>
-        <p className="font-poppins text-cp-body mb-6">We'll be in touch within one business day to confirm your enquiry.</p>
-        <a href={PHONE_HREF} className="inline-flex items-center gap-2 cp-gradient-bg text-white px-6 py-3 rounded-full font-poppins font-semibold text-sm hover:opacity-90 transition-opacity">
-          <Phone className="w-4 h-4" />
-          Call us now: {PHONE}
-        </a>
-      </div>
-    );
   }
 
   return (
-    <div className="bg-white rounded-2xl p-8 border border-cp-rule relative overflow-hidden" style={{ boxShadow: "0 2px 16px 0 rgba(182,122,236,0.08)" }}>
-      <div className="absolute left-0 top-0 bottom-0 w-1.5 rounded-l-2xl" style={{ background: "linear-gradient(to bottom, #F2506A, #B67AEC, #27BBE9)" }} />
-      <h2 className="font-lora text-2xl font-bold text-[#071B27] mb-2">{heading}</h2>
-      <p className="font-poppins text-cp-muted text-sm mb-6">{subtext}</p>
-      <form onSubmit={handleSubmit} noValidate className="space-y-4">
-        <div className="grid grid-cols-2 gap-4">
-          <div>
-            <label className="block text-sm font-semibold font-poppins text-[#071B27] mb-1">First name *</label>
-            <input className={inputCls("first_name")} value={fields.first_name} onChange={e => set("first_name", e.target.value)} />
-            {errors.first_name && <p className="text-brand-pink text-xs mt-1 font-poppins">{errors.first_name}</p>}
-          </div>
-          <div>
-            <label className="block text-sm font-semibold font-poppins text-[#071B27] mb-1">Last name *</label>
-            <input className={inputCls("last_name")} value={fields.last_name} onChange={e => set("last_name", e.target.value)} />
-            {errors.last_name && <p className="text-brand-pink text-xs mt-1 font-poppins">{errors.last_name}</p>}
-          </div>
-        </div>
-        <div className="grid grid-cols-2 gap-4">
-          <div>
-            <label className="block text-sm font-semibold font-poppins text-[#071B27] mb-1">Email *</label>
-            <input type="email" className={inputCls("email")} value={fields.email} onChange={e => set("email", e.target.value)} />
-            {errors.email && <p className="text-brand-pink text-xs mt-1 font-poppins">{errors.email}</p>}
-          </div>
-          <div>
-            <label className="block text-sm font-semibold font-poppins text-[#071B27] mb-1">Phone *</label>
-            <input type="tel" className={inputCls("phone")} value={fields.phone} onChange={e => set("phone", e.target.value)} />
-            {errors.phone && <p className="text-brand-pink text-xs mt-1 font-poppins">{errors.phone}</p>}
-          </div>
-        </div>
-        <div>
-          <label className="block text-sm font-semibold font-poppins text-[#071B27] mb-1">What are you looking for? *</label>
-          <select className={inputCls("enquiry_type")} value={fields.enquiry_type} onChange={e => set("enquiry_type", e.target.value)}>
-            <option value="">Select an option</option>
-            {ENQUIRY_TYPES.map(t => <option key={t} value={t}>{t}</option>)}
-          </select>
-          {errors.enquiry_type && <p className="text-brand-pink text-xs mt-1 font-poppins">{errors.enquiry_type}</p>}
-        </div>
-        <div>
-          <label className="block text-sm font-semibold font-poppins text-[#071B27] mb-1">Anything else you'd like us to know? <span className="font-normal text-cp-muted">(optional)</span></label>
-          <textarea rows={3} className={inputCls("message")} value={fields.message} onChange={e => set("message", e.target.value)} />
-        </div>
-        <div>
-          <label className="flex items-start gap-3 cursor-pointer">
-            <input type="checkbox" className="mt-0.5 accent-brand-purple" checked={fields.consent} onChange={e => set("consent", e.target.checked)} />
-            <span className="font-poppins text-sm text-cp-body">I consent to being contacted by Contemporary Psychology regarding my enquiry.</span>
-          </label>
-          {errors.consent && <p className="text-brand-pink text-xs mt-1 font-poppins">{errors.consent}</p>}
-        </div>
-        {errors.submit && <p className="text-brand-pink text-sm font-poppins">{errors.submit}</p>}
-        <button type="submit" disabled={submitting} className="w-full cp-gradient-bg text-white py-3 rounded-full font-poppins font-semibold text-sm hover:opacity-90 transition-opacity disabled:opacity-60">
-          {submitting ? "Sending…" : "Send Enquiry"}
-        </button>
+    <>
+      {pendingService === "adhd-assessment" && (
+        <MedicationDisclaimerModal onConfirm={confirmDisclaimer} onCancel={() => setPendingService(null)} />
+      )}
+      <form onSubmit={handleSubmit} noValidate>
+        <motion.div variants={container} initial="hidden" animate="show" className="space-y-8">
+
+          {/* 1. Personal details */}
+          <motion.div variants={item} className="space-y-4">
+            <p className="text-xs font-bold font-poppins text-cp-muted uppercase tracking-wider">Your details</p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="space-y-1.5">
+                <Label htmlFor="first_name" className="text-xs font-semibold font-poppins text-cp-body">First name <span className="text-brand-pink">*</span></Label>
+                <Input id="first_name" value={data.first_name} onChange={(e) => set("first_name", e.target.value)} className={cn(errors.first_name && "border-red-400")} />
+                {errors.first_name && <p className="text-xs text-red-600 font-poppins">{errors.first_name}</p>}
+              </div>
+              <div className="space-y-1.5">
+                <Label htmlFor="last_name" className="text-xs font-semibold font-poppins text-cp-body">Last name <span className="text-brand-pink">*</span></Label>
+                <Input id="last_name" value={data.last_name} onChange={(e) => set("last_name", e.target.value)} className={cn(errors.last_name && "border-red-400")} />
+                {errors.last_name && <p className="text-xs text-red-600 font-poppins">{errors.last_name}</p>}
+              </div>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="space-y-1.5">
+                <Label htmlFor="email" className="text-xs font-semibold font-poppins text-cp-body">Email <span className="text-brand-pink">*</span></Label>
+                <Input id="email" type="email" value={data.email} onChange={(e) => set("email", e.target.value)} className={cn(errors.email && "border-red-400")} />
+                <p className="text-[11px] text-cp-muted font-poppins">We'll send your confirmation here</p>
+                {errors.email && <p className="text-xs text-red-600 font-poppins">{errors.email}</p>}
+              </div>
+              <div className="space-y-1.5">
+                <Label htmlFor="phone" className="text-xs font-semibold font-poppins text-cp-body">Phone <span className="text-brand-pink">*</span></Label>
+                <Input id="phone" type="tel" value={data.phone} onChange={(e) => set("phone", e.target.value)} className={cn(errors.phone && "border-red-400")} />
+                {errors.phone && <p className="text-xs text-red-600 font-poppins">{errors.phone}</p>}
+              </div>
+            </div>
+            <div className="sm:w-1/2 sm:pr-2 space-y-1.5">
+              <Label htmlFor="postcode" className="text-xs font-semibold font-poppins text-cp-body">Postcode <span className="text-brand-pink">*</span></Label>
+              <Input id="postcode" value={data.postcode} onChange={(e) => set("postcode", e.target.value)} className={cn(errors.postcode && "border-red-400")} />
+              {errors.postcode && <p className="text-xs text-red-600 font-poppins">{errors.postcode}</p>}
+            </div>
+          </motion.div>
+
+          {/* 2. Service */}
+          <motion.div variants={item} className="space-y-3">
+            <p className="text-xs font-bold font-poppins text-cp-muted uppercase tracking-wider">What are you looking for?</p>
+            <div className="space-y-1.5">
+              <Label className="text-xs font-semibold font-poppins text-cp-body">Service <span className="text-brand-pink">*</span></Label>
+              <Select value={data.service_type} onValueChange={handleServiceChange}>
+                <SelectTrigger className={cn(errors.service_type && "border-red-400")}>
+                  <SelectValue placeholder="Select a service..." />
+                </SelectTrigger>
+                <SelectContent>
+                  {SERVICES.map((s) => (
+                    <SelectItem key={s.value} value={s.value}>{s.label}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              {errors.service_type && <p className="text-xs text-red-600 font-poppins">{errors.service_type}</p>}
+            </div>
+          </motion.div>
+
+          {/* 3. Clinician preference */}
+          {data.service_type && (
+            <motion.div variants={item} initial="hidden" animate="show" className="space-y-3">
+              <p className="text-xs font-bold font-poppins text-cp-muted uppercase tracking-wider">Clinician preference</p>
+              <p className="text-xs text-cp-muted font-poppins">Select a clinician or leave on "no preference" and we'll match you.</p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                <button type="button" onClick={() => set("preferred_clinician", "")} className={cn("rounded-xl border p-4 text-center transition-all", data.preferred_clinician === "" ? "border-brand-pink bg-surface-pink shadow-sm" : "border-cp-rule bg-white hover:border-brand-pink/50")}>
+                  <div className="w-12 h-12 rounded-full bg-surface-purple flex items-center justify-center mb-3 mx-auto">
+                    <span className="text-lg">✦</span>
+                  </div>
+                  <p className="text-sm font-semibold font-poppins text-[#071B27]">No preference</p>
+                  <p className="text-xs text-cp-muted font-poppins mt-0.5">Help me be matched</p>
+                </button>
+                {availableClinicians.map((c) => (
+                  <button key={c.id} type="button" onClick={() => set("preferred_clinician", c.name)} className={cn("rounded-xl border p-4 text-center transition-all", data.preferred_clinician === c.name ? "border-brand-pink bg-surface-pink shadow-sm" : "border-cp-rule bg-white hover:border-brand-pink/50")}>
+                    <img src={c.photo_url} alt={c.name} className="w-12 h-12 rounded-full object-cover object-top mb-3 mx-auto" onError={(e) => { (e.target as HTMLImageElement).src = `https://ui-avatars.com/api/?name=${encodeURIComponent(c.name)}&background=F2506A&color=fff&size=80`; }} />
+                    <p className="text-sm font-semibold font-poppins text-[#071B27]">{c.name}</p>
+                    <p className="text-[11px] text-cp-muted font-poppins">{c.title}</p>
+                  </button>
+                ))}
+              </div>
+            </motion.div>
+          )}
+
+          {/* 4. Follow-up preferences */}
+          <motion.div variants={item} className="space-y-4">
+            <p className="text-xs font-bold font-poppins text-cp-muted uppercase tracking-wider">Follow-up preferences</p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="space-y-1.5">
+                <Label htmlFor="callback_time" className="text-xs font-semibold font-poppins text-cp-body">When can we contact you? <span className="text-brand-pink">*</span></Label>
+                <Input id="callback_time" placeholder="e.g. Weekday mornings, after 3pm..." value={data.callback_time} onChange={(e) => set("callback_time", e.target.value)} className={cn(errors.callback_time && "border-red-400")} />
+                {errors.callback_time && <p className="text-xs text-red-600 font-poppins">{errors.callback_time}</p>}
+              </div>
+              <div className="space-y-1.5">
+                <Label className="text-xs font-semibold font-poppins text-cp-body">How did you hear about us? <span className="text-brand-pink">*</span></Label>
+                <Select value={data.referral_source} onValueChange={(v) => set("referral_source", v)}>
+                  <SelectTrigger className={cn(errors.referral_source && "border-red-400")}>
+                    <SelectValue placeholder="Select..." />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {REFERRAL_OPTIONS.map((o) => (
+                      <SelectItem key={o} value={o}>{o}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                {errors.referral_source && <p className="text-xs text-red-600 font-poppins">{errors.referral_source}</p>}
+              </div>
+            </div>
+          </motion.div>
+
+          {/* 5. Additional details */}
+          <motion.div variants={item} className="space-y-1.5">
+            <Label htmlFor="message" className="text-xs font-semibold font-poppins text-cp-body">
+              Anything else you'd like us to know? <span className="text-cp-muted font-normal">(optional)</span>
+            </Label>
+            <Textarea id="message" rows={3} placeholder="Anything else you'd like us to know before we call?" value={data.message} onChange={(e) => set("message", e.target.value)} className="resize-none" />
+          </motion.div>
+
+          {errors.form && (
+            <motion.p variants={item} className="text-sm text-red-600 font-poppins bg-red-50 border border-red-200 rounded-lg px-4 py-3">
+              {errors.form}
+            </motion.p>
+          )}
+
+          {/* Submit */}
+          <motion.div variants={item} className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+            <Button type="submit" disabled={submitting} className="inline-flex items-center gap-2 rounded-full bg-brand-pink hover:opacity-90 text-white font-semibold font-poppins text-sm px-7 py-3 h-auto disabled:opacity-60">
+              {submitting ? (
+                <>
+                  <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24" fill="none">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z" />
+                  </svg>
+                  Sending your request…
+                </>
+              ) : (
+                <>Submit Enquiry <Send className="h-4 w-4" /></>
+              )}
+            </Button>
+            <p className="text-xs text-cp-muted font-poppins leading-relaxed max-w-xs">
+              By submitting you agree to our team contacting you to confirm. Your information is kept confidential.
+            </p>
+          </motion.div>
+
+          <motion.p variants={item} className="text-xs text-cp-muted font-poppins border-t border-cp-rule pt-4">
+            Please note: Contemporary Psychology does not prescribe medication. If you require a medication review or psychiatric assessment, please speak with your GP.
+          </motion.p>
+
+        </motion.div>
       </form>
-    </div>
+    </>
   );
 }
