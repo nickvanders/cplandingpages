@@ -243,7 +243,7 @@ export function AppointmentForm({ defaultServiceType = "", source }: { defaultSe
   if (submitted) {
     return (
       <div className="rounded-2xl bg-white border border-cp-rule p-8 text-center space-y-6" style={{ boxShadow: "0 2px 16px 0 rgba(182,122,236,0.08)" }}>
-        <img src="/favicon.png" alt="Contemporary Psychology" className="w-14 h-14 mx-auto" />
+        <img src="/assets/logo.png" alt="Contemporary Psychology" className="h-14 w-auto mx-auto" />
         <div>
           <h3 className="font-lora font-bold text-[#071B27] text-2xl mb-2">Thanks, {submitted.first_name}!</h3>
           <p className="font-poppins text-cp-body text-sm leading-relaxed max-w-md mx-auto">

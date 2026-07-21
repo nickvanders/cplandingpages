@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { CheckCircle2, Phone, ArrowLeft } from "lucide-react";
+import { Phone, ArrowLeft } from "lucide-react";
 import { Link } from "wouter";
 
 declare global {
@@ -24,9 +24,7 @@ export default function ThankYou() {
     <div className="min-h-screen bg-background flex flex-col items-center justify-center px-6 py-16">
       <Card className="max-w-lg w-full">
         <CardContent className="p-8 text-center">
-          <div className="w-16 h-16 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center mx-auto mb-6">
-            <CheckCircle2 className="w-8 h-8 text-green-600 dark:text-green-400" />
-          </div>
+          <img src="/assets/logo.png" alt="Contemporary Psychology" className="h-14 w-auto mx-auto mb-6" />
 
           <h1 className="font-heading text-2xl md:text-3xl font-semibold text-foreground mb-4">
             Thank You for Your Enquiry
