@@ -110,9 +110,10 @@ function MedicationDisclaimerModal({ onConfirm, onCancel }: { onConfirm: () => v
 }
 
 const SOURCE_LABELS: Record<string, string> = {
-  "adhd-assessment": "adhd-landing-page",
-  "asd-assessment":  "asd-landing-page",
-  "couples":         "couples-landing-page",
+  "adhd-assessment":    "adhd-landing-page",
+  "asd-assessment":     "asd-landing-page",
+  "couples":            "couples-landing-page",
+  "individual-therapy": "individual-therapy-landing-page",
 };
 
 export function AppointmentForm({ defaultServiceType = "", source }: { defaultServiceType?: string; source?: string } = {}) {
