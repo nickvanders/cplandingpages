@@ -3,7 +3,6 @@ import ADHDHome from "./pages/adhd/Home";
 import ASDHome from "./pages/asd/Home";
 import CouplesHome from "./pages/couples/Home";
 import TherapyHome from "./pages/therapy/Home";
-import ThankYou from "./pages/ThankYou";
 import NotFound from "./pages/not-found";
 
 function PageByHostname() {
@@ -31,7 +30,6 @@ function PageByHostname() {
 export default function App() {
   return (
     <Switch>
-      <Route path="/thank-you" component={ThankYou} />
       <Route component={PageByHostname} />
     </Switch>
   );
