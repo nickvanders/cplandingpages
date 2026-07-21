@@ -1,7 +1,6 @@
 import { useState, useRef } from "react";
-import { useLocation } from "wouter";
 import { motion } from "framer-motion";
-import { Send, X, AlertCircle } from "lucide-react";
+import { Send, X, AlertCircle, CheckCircle, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -116,11 +115,19 @@ const SOURCE_LABELS: Record<string, string> = {
   "individual-therapy": "individual-therapy-landing-page",
 };
 
+const MAIN = "https://contemporarypsychology.com.au";
+
+const HELPFUL_LINKS = [
+  { label: "Blog",               desc: "Articles and insights from our team",           href: `${MAIN}/blog` },
+  { label: "Pricing & Rebates",  desc: "Understand your costs and Medicare options",     href: `${MAIN}/pricing-rebates` },
+  { label: "Resources",          desc: "Tools, guides, and self-help materials",         href: `${MAIN}/resources` },
+];
+
 export function AppointmentForm({ defaultServiceType = "", source }: { defaultServiceType?: string; source?: string } = {}) {
-  const [, navigate] = useLocation();
   const [data, setData] = useState<FormData>({ ...EMPTY, service_type: defaultServiceType });
   const [errors, setErrors] = useState<Errors>({});
   const [submitting, setSubmitting] = useState(false);
+  const [submitted, setSubmitted] = useState<{ first_name: string; callback_time: string } | null>(null);
   const [pendingService, setPendingService] = useState<string | null>(null);
   const hasStartedRef = useRef(false);
 
@@ -224,13 +231,44 @@ export function AppointmentForm({ defaultServiceType = "", source }: { defaultSe
         });
       }
 
-      navigate("/thank-you");
+      setSubmitted({ first_name: data.first_name, callback_time: data.callback_time });
     } catch (err) {
       console.error("[AppointmentForm] Supabase insert failed:", err);
       setErrors({ form: "Something went wrong. Please call us directly or try again." });
     } finally {
       setSubmitting(false);
     }
+  }
+
+  if (submitted) {
+    return (
+      <div className="rounded-2xl bg-white border border-cp-rule p-8 text-center space-y-6" style={{ boxShadow: "0 2px 16px 0 rgba(182,122,236,0.08)" }}>
+        <div className="flex items-center justify-center w-14 h-14 rounded-full mx-auto" style={{ background: "linear-gradient(135deg, #F2506A20, #B67AEC20)" }}>
+          <CheckCircle className="w-7 h-7" style={{ color: "#B67AEC" }} />
+        </div>
+        <div>
+          <h3 className="font-lora font-bold text-[#071B27] text-2xl mb-2">Thanks, {submitted.first_name}!</h3>
+          <p className="font-poppins text-cp-body text-sm leading-relaxed max-w-md mx-auto">
+            Your enquiry has been received. We'll be in touch{submitted.callback_time ? ` during ${submitted.callback_time.toLowerCase()}` : " within one business day"}.
+          </p>
+        </div>
+        <div className="border-t border-cp-rule pt-6">
+          <p className="font-poppins text-xs text-cp-muted mb-4 uppercase tracking-wider font-semibold">While you wait, explore</p>
+          <div className="grid sm:grid-cols-3 gap-3">
+            {HELPFUL_LINKS.map(link => (
+              <a key={link.label} href={link.href} className="block rounded-xl border border-cp-rule p-4 text-left hover:border-[#B67AEC] transition-colors group">
+                <p className="font-poppins font-semibold text-sm text-[#071B27] group-hover:text-brand-purple transition-colors">{link.label}</p>
+                <p className="font-poppins text-xs text-cp-muted mt-0.5 leading-relaxed">{link.desc}</p>
+              </a>
+            ))}
+          </div>
+        </div>
+        <a href="tel:0390814270" className="inline-flex items-center gap-2 rounded-full border border-[#E2DCEF] text-[#3D3D5C] hover:border-[#F2506A] hover:text-[#F2506A] text-sm font-semibold px-5 py-2.5 transition-colors font-poppins">
+          <Phone className="w-4 h-4" />
+          03 9081 4270
+        </a>
+      </div>
+    );
   }
 
   return (
