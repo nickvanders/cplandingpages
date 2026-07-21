@@ -25,7 +25,7 @@ export default function ContactForm() {
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-5 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
           <div className="lg:col-span-3">
             <Card>
               <CardContent className="p-0">
