@@ -1,12 +1,13 @@
 import { Card, CardContent } from "@/components/ui/card";
-import { 
-  Phone, 
-  Mail, 
-  MapPin, 
-  Clock, 
-  Shield, 
+import {
+  Phone,
+  Mail,
+  MapPin,
+  Clock,
+  Shield,
   CheckCircle2
 } from "lucide-react";
+import { AppointmentForm } from "@/components/shared/EnquiryForm";
 
 export default function ContactForm() {
   return (
@@ -20,7 +21,7 @@ export default function ContactForm() {
             Book Your Consultation
           </h2>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            Take the first step towards understanding autism. Contact us to schedule 
+            Take the first step towards understanding autism. Contact us to schedule
             your initial consultation.
           </p>
         </div>
@@ -28,14 +29,8 @@ export default function ContactForm() {
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
           <div className="lg:col-span-3">
             <Card>
-              <CardContent className="p-0">
-                <iframe
-                  src="https://www.contemporarypsychology.com.au/web-form/"
-                  className="w-full border-0 rounded-md"
-                  style={{ minHeight: "600px" }}
-                  title="Book a consultation"
-                  data-testid="contact-form-iframe"
-                />
+              <CardContent className="p-6">
+                <AppointmentForm defaultServiceType="asd-assessment" source="asd-landing-page" />
               </CardContent>
             </Card>
           </div>

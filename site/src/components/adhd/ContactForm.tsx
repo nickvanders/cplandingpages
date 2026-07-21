@@ -1,12 +1,13 @@
 import { Card, CardContent } from "@/components/ui/card";
-import { 
-  Phone, 
-  Mail, 
-  MapPin, 
-  Clock, 
-  Shield, 
+import {
+  Phone,
+  Mail,
+  MapPin,
+  Clock,
+  Shield,
   CheckCircle2
 } from "lucide-react";
+import { AppointmentForm } from "@/components/shared/EnquiryForm";
 
 export default function ContactForm() {
 
@@ -21,7 +22,7 @@ export default function ContactForm() {
             Book Your Consultation
           </h2>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            Take the first step towards understanding ADHD. Contact us to schedule 
+            Take the first step towards understanding ADHD. Contact us to schedule
             your free initial consultation.
           </p>
         </div>
@@ -30,13 +31,7 @@ export default function ContactForm() {
           <div className="lg:col-span-3">
             <Card>
               <CardContent className="p-6">
-                <iframe
-                  src="https://www.contemporarypsychology.com.au/web-form/"
-                  className="w-full border-0"
-                  style={{ minHeight: "600px" }}
-                  title="Contact Form"
-                  data-testid="wpforms-iframe"
-                />
+                <AppointmentForm defaultServiceType="adhd-assessment" source="adhd-landing-page" />
               </CardContent>
             </Card>
           </div>
